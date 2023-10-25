@@ -1,26 +1,20 @@
 import { styled } from '@stitches/react'
 
 export const HomeContainer = styled('main', {
-  display: 'grid',
   padding: 20,
-  gridTemplateColumns: '37.5rem 1fr',
+  display: 'flex',
   gap: 20,
+  height: '100vh',
+  overflow: 'hidden',
 
-  '.image-container': {
-    width: '100%',
-    height: '100%',
-
-    '.image': {
-      display: 'block !important',
-      width: '100% !important',
-      height: '100% !important',
-
-      objectFit: 'cover !important',
-      borderRadius: '8px',
-    },
+  '.image': {
+    maxWidth: '550px',
+    maxHeight: '100%',
+    borderRadius: '8px',
   },
 
   '.login-box': {
+    flex: 1,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -43,10 +37,33 @@ export const HomeContainer = styled('main', {
     '.margin': {
       marginBottom: '1rem',
     },
+
+    '.logo-container': {
+      display: 'none',
+    },
   },
 
-  '@media screen and (max-width: 990px)': {
-    gridTemplateColumns: '1fr 372px',
+  '@media screen and (max-width: 950px)': {
+    '.image': {
+      maxWidth: '400px',
+      maxHeight: '100%',
+      borderRadius: '8px',
+    },
+  },
+
+  '@media screen and (max-width: 800px)': {
+    '.image': {
+      display: 'none',
+    },
+    '.logo-container': {
+      display: 'block !important',
+      textAlign: 'center',
+      marginBottom: '1rem',
+
+      '.logo': {
+        maxWidth: '200px',
+      },
+    },
   },
 })
 
