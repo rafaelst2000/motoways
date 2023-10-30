@@ -36,7 +36,7 @@ export default function Home() {
                 layout="responsive"
                 quality={100}
                 priority={true}
-                alt="Motoways login image"
+                alt="Motoways logo"
                 className="logo"
               />
             </div>

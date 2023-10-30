@@ -80,9 +80,9 @@ export const HomeButton = styled('button', {
   display: 'flex',
   alignItems: 'center',
   borderRadius: '8px',
+  transition: '0.2s all',
 
   '&:hover': {
-    transition: '0.2s all',
     transform: 'scale(1.03)',
     background: '$gray-700',
   },

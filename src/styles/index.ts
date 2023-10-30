@@ -34,6 +34,8 @@ export const {
       'gray-600': '#252d4a',
       'gray-700': '#181c2a',
       'gray-800': '#0e1116',
+
+      'gradient-vertical': 'linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)',
     },
 
     fonts: {
