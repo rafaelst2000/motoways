@@ -37,9 +37,11 @@ export default function Feed() {
           </p>
         </div>
 
-        <PostCardMin />
-        <PostCardMin />
-        <PostCardMin />
+        <div className="cards">
+          <PostCardMin />
+          <PostCardMin />
+          <PostCardMin />
+        </div>
       </div>
     </FeedContainer>
   )

@@ -12,10 +12,6 @@ export const PostCardMinContainer = styled('div', {
     background: '$gray-600',
   },
 
-  '&:not(:first-of-type)': {
-    marginTop: 12,
-  },
-
   '.card-content': {
     display: 'flex',
     gap: 20,

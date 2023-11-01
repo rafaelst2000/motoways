@@ -6,9 +6,15 @@ import homeImage from '@/assets/Image.png'
 import googleIcon from '@/assets/GoogleIcon.svg'
 import facebookIcon from '@/assets/FacebookIcon.svg'
 import logo from '@/assets/Logo.png'
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  console.log(homeImage)
+  const router = useRouter()
+
+  function goToFeed() {
+    router.push('/feed')
+  }
+
   return (
     <>
       <Head>
@@ -42,7 +48,7 @@ export default function Home() {
             </div>
             <h1>Boas vindas!</h1>
             <p>Faça seu login e encontre as melhores rotas</p>
-            <HomeButton className="margin">
+            <HomeButton className="margin" onClick={goToFeed}>
               <Image
                 src={googleIcon}
                 alt="Google icon"
@@ -51,7 +57,7 @@ export default function Home() {
               />
               Entrar com Google
             </HomeButton>
-            <HomeButton>
+            <HomeButton onClick={goToFeed}>
               <Image
                 src={facebookIcon}
                 alt="Facebook icon"

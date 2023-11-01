@@ -11,6 +11,21 @@ export const globalStyles = globalCss({
     'scroll-behavior': 'smooth',
   },
 
+  '::-webkit-scrollbar-track': {
+    borderRadius: 999,
+    backgroundColor: '$gray-700',
+  },
+
+  '::-webkit-scrollbar': {
+    width: 6,
+    backgroundColor: '$gray-700',
+  },
+
+  '::-webkit-scrollbar-thumb': {
+    borderRadius: 999,
+    backgroundColor: '$gray-600',
+  },
+
   'body, button, input, textarea': {
     fontFamily: '$nunito',
   },

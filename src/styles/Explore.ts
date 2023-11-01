@@ -1,13 +1,20 @@
 import { styled } from '@stitches/react'
 
-export const FeedContainer = styled('main', {
+export const ExploreContainer = styled('main', {
   padding: 20,
   display: 'grid',
-  gridTemplateColumns: '232px 1fr 324px',
+  gridTemplateColumns: '232px 1fr',
   gap: '4rem',
 
   '.center-content': {
     paddingTop: '3.5rem',
+
+    '.title-container': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+    },
+
     '.page-title': {
       display: 'flex',
       alignItems: 'center',
@@ -59,13 +66,6 @@ export const FeedContainer = styled('main', {
       },
     },
 
-    '.cards': {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 12,
-    },
-
     '.section-title': {
       margin: '2.5rem 0 1rem',
       width: '100%',
@@ -99,4 +99,18 @@ export const FeedContainer = styled('main', {
       },
     },
   },
+
+  '.cards': {
+    display: 'grid',
+    gap: 20,
+    gridTemplateColumns: 'repeat(5, 1fr)',
+  },
+})
+
+export const TagsContainer = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '12px',
+  marginTop: 40,
+  marginBottom: 48,
 })

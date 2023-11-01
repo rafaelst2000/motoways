@@ -5,9 +5,14 @@ import Avatar from './Avatar'
 
 import logo from '@/assets/Logo.png'
 import rafael from '@/assets/rafael.png'
+import { useRouter } from 'next/router'
 
 export default function SideMenu() {
-  const isSelected = true
+  const router = useRouter()
+
+  function goToPage(page: string) {
+    router.push(`/${page}`)
+  }
 
   return (
     <SideMenuContainer>
@@ -22,16 +27,34 @@ export default function SideMenu() {
       />
 
       <ul>
-        <li className={isSelected ? 'selected' : ''}>
-          <ChartLineUp size={24} color={isSelected ? '#F8F9FC' : '#8d95af'} />
+        <li
+          className={router.pathname === '/feed' ? 'selected' : ''}
+          onClick={() => goToPage('feed')}
+        >
+          <ChartLineUp
+            size={24}
+            color={router.pathname === '/feed' ? '#F8F9FC' : '#8d95af'}
+          />
           Início
         </li>
-        <li>
-          <Binoculars size={24} color="#8d95af" />
+        <li
+          className={router.pathname === '/explore' ? 'selected' : ''}
+          onClick={() => goToPage('explore')}
+        >
+          <Binoculars
+            size={24}
+            color={router.pathname === '/explore' ? '#F8F9FC' : '#8d95af'}
+          />
           Explorar
         </li>
-        <li>
-          <User size={24} color="#8d95af" />
+        <li
+          className={router.pathname === '/profile' ? 'selected' : ''}
+          onClick={() => goToPage('profile')}
+        >
+          <User
+            size={24}
+            color={router.pathname === '/profile' ? '#F8F9FC' : '#8d95af'}
+          />
           Perfil
         </li>
       </ul>
@@ -39,7 +62,7 @@ export default function SideMenu() {
       <div className="user-container">
         <Avatar url={rafael} variant={'xs'} />
         <p>Rafael T</p>
-        <SignOut size={20} color="#F75A68" />
+        <SignOut size={20} color="#F75A68" onClick={() => goToPage('')} />
       </div>
     </SideMenuContainer>
   )
