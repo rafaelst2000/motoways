@@ -1,6 +1,10 @@
 import { globalCss } from '.'
 
 export const globalStyles = globalCss({
+  ':root': {
+    '--swiper-theme-color': '$purple-200 !important',
+  },
+
   '*': {
     margin: 0,
     padding: 0,

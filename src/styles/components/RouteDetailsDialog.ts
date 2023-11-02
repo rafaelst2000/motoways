@@ -113,4 +113,46 @@ export const RouteDetailsWrapper = styled('div', {
       borderRadius: 8,
     },
   },
+
+  '.carrousel-container': {
+    maxWidth: 'calc(100% - 32px)',
+    margin: '24px auto 0',
+  },
+
+  '.carrousel-item': {
+    display: 'flex !important',
+    justifyContent: 'center',
+
+    img: {
+      borderRadius: 8,
+    },
+  },
+
+  '.actions-container': {
+    width: '100%',
+    display: 'flex',
+    gap: 24,
+    marginTop: 12,
+
+    button: {
+      width: '100%',
+      outline: 'none',
+      border: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      fontWeight: '700',
+      fontSize: '1rem',
+      color: '$gray-200',
+      padding: '12px 24px',
+      borderRadius: 8,
+      transition: '0.2s',
+      backgroundColor: '$gray-600',
+      cursor: 'pointer',
+      gap: 12,
+
+      '&:hover': {
+        backgroundColor: '$gray-500',
+      },
+    },
+  },
 })
