@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogOverlay,
   RouteDetailsWrapper,
+  RouteCommentsWrapper,
 } from '@/styles/components/RouteDetailsDialog'
 import {
   CaretLeft,
@@ -13,7 +14,7 @@ import {
   X,
 } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 
 import rastro from '@/assets/rastro.jpg'
 import map from '@/assets/map.png'
@@ -23,6 +24,8 @@ import Stars from './Stars'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { CommentCard } from './CommentCard'
+import { RatingForm } from './RatingForm'
 
 type RouteDetailsProps = {
   children: ReactNode
@@ -60,13 +63,16 @@ export const RouteDetailsDialog = ({ children }: RouteDetailsProps) => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
-    /*  autoplaySpeed: 3000,
-    autoplay: true, */
-
     dots: false,
     className: 'carrousel-container',
     nextArrow: <NextArrow />,
     prevArrow: <PreviousArrow />,
+  }
+
+  const [showForm, setShowForm] = useState(false)
+
+  function handleComment() {
+    setShowForm(true)
   }
 
   return (
@@ -141,6 +147,24 @@ export const RouteDetailsDialog = ({ children }: RouteDetailsProps) => {
               </button>
             </div>
           </RouteDetailsWrapper>
+
+          <RouteCommentsWrapper>
+            <div className="comment-actions">
+              <span>Comentários</span>
+              {!showForm && <p onClick={handleComment}>Comentar</p>}
+            </div>
+
+            <ul>
+              {showForm && (
+                <RatingForm
+                  onCancel={() => setShowForm(false)}
+                  routeId="teste"
+                />
+              )}
+              <CommentCard />
+              <CommentCard />
+            </ul>
+          </RouteCommentsWrapper>
         </DialogContent>
       </Dialog.Portal>
     </Dialog.Root>

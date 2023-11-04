@@ -156,3 +156,136 @@ export const RouteDetailsWrapper = styled('div', {
     },
   },
 })
+
+export const RouteCommentsWrapper = styled('div', {
+  marginTop: 16,
+  '.comment-actions': {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    span: {
+      fontSize: '0.875rem',
+      color: '$gray-200',
+      lineHeight: '160%',
+    },
+
+    p: {
+      fontSize: '1rem',
+      color: '$purple-100',
+      lineHeight: '160%',
+      fontWeight: '700',
+      cursor: 'pointer',
+      padding: '4px 8px',
+      transition: '0.2s',
+
+      '&:hover': {
+        color: '$purple-200',
+      },
+    },
+  },
+
+  ul: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+  },
+})
+
+export const CommentCardContainer = styled('li', {
+  width: '100%',
+  borderRadius: 8,
+  backgroundColor: '$gray-700',
+  padding: 24,
+
+  p: {
+    marginTop: 20,
+    fontSize: '0.875rem',
+    fontWeight: '400',
+    lineHeight: '160%',
+    color: '$gray-300',
+  },
+
+  '.card-header': {
+    display: 'grid',
+    gridTemplateColumns: '40px 1fr 100px',
+    gap: 16,
+
+    '.person-info': {
+      h3: {
+        fontSize: '1rem',
+        color: '$gray-100',
+        lineHeight: '140%',
+      },
+      span: {
+        fontSize: '0.875rem',
+        color: '$gray-400',
+        lineHeight: '160%',
+      },
+    },
+  },
+})
+
+export const RatingFormContainer = styled('div', {
+  background: '$gray-700',
+  padding: 24,
+  borderRadius: 8,
+  marginTop: 8,
+
+  '.user-details': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    '.user-info': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+
+      h3: {
+        fontSize: '1rem',
+        color: '$gray-100',
+        lineHeight: '140%',
+      },
+    },
+  },
+})
+
+export const FormContainer = styled('form', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 12,
+  marginTop: 24,
+})
+
+export const ActionsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  gap: 8,
+
+  button: {
+    width: 40,
+    height: 40,
+    borderRadius: 4,
+    background: '$gray-600',
+    transition: '0.2s',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    svg: {
+      width: 24,
+      height: 24,
+    },
+
+    '&:not(:disabled):hover': {
+      background: '$gray-500',
+    },
+    '&:disabled': {
+      cursor: 'not-allowed',
+      opacity: '0.6',
+    },
+  },
+})
