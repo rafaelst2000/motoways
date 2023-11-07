@@ -10,10 +10,15 @@ type StarProps = ComponentProps<typeof StarsContainer> & {
 
 export default function Stars({
   rating,
-  size = 'sm',
+  size = 'md',
   setRating,
   ...props
 }: StarProps) {
+  const sizes = {
+    sm: 14,
+    md: 20,
+    lg: 24,
+  }
   const [previewValue, setPreviewValue] = useState(0)
   const isEditable = !!setRating
   const ratingValue = isEditable ? previewValue : rating
@@ -33,7 +38,6 @@ export default function Stars({
   return (
     <StarsContainer
       css={isEditable ? { cursor: 'pointer' } : undefined}
-      size={size}
       {...props}
     >
       {Array.from({ length: 5 }).map((_, i) => (
@@ -43,6 +47,7 @@ export default function Stars({
           onMouseEnter={() => handleMouseEnter(i + 1)}
           onMouseLeave={handleMouseLeave}
           onClick={handleSetValue}
+          size={sizes[size]}
         />
       ))}
     </StarsContainer>

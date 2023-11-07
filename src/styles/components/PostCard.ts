@@ -17,7 +17,7 @@ export const PostCardContainer = styled('div', {
 
   '.base-info': {
     display: 'grid',
-    gridTemplateColumns: '40px 1fr 96px',
+    gridTemplateColumns: '40px 1fr 120px',
     gap: 16,
     marginBottom: 32,
 

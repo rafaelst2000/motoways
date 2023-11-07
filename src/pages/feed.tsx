@@ -1,3 +1,4 @@
+import { CreateRouteDialog } from '@/components/CreateRouteDialog'
 import PostCard from '@/components/PostCard'
 import PostCardMin from '@/components/PostCardMin'
 import PostCardMy from '@/components/PostCardMy'
@@ -25,10 +26,12 @@ export default function Feed() {
       </div>
 
       <div className="side-content">
-        <button>
-          <PlusCircle color={'#50b2c0'} size={16} />
-          Criar roteiro
-        </button>
+        <CreateRouteDialog>
+          <button>
+            <PlusCircle color={'#50b2c0'} size={16} />
+            Criar roteiro
+          </button>
+        </CreateRouteDialog>
 
         <div className="section-title">
           <h2>Destinos populares</h2>

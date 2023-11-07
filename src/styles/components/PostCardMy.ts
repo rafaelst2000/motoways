@@ -5,9 +5,15 @@ export const PostCardMyContainer = styled('div', {
   background: '$gray-600',
   borderRadius: 8,
   padding: '20px 24px',
+  transition: '0.2s',
+  cursor: 'pointer',
 
   '&:not(:first-of-type)': {
     marginTop: 12,
+  },
+
+  '&:hover': {
+    background: '$gray-500',
   },
 
   span: {

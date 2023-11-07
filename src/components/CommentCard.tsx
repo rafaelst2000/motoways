@@ -12,7 +12,7 @@ export const CommentCard = () => {
           <h3>Rafael Trevisan</h3>
           <span>Há 2 dias</span>
         </div>
-        <Stars rating={4} />
+        <Stars size="sm" rating={4} />
       </div>
 
       <p>

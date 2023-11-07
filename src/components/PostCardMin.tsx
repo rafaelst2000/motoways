@@ -22,7 +22,7 @@ export default function PostCardMin() {
               <h4>Serra do Rio do Rastro</h4>
               <span>Santa Catarina</span>
             </div>
-            <Stars rating={3} />
+            <Stars size="sm" rating={3} />
           </div>
         </div>
       </PostCardMinContainer>
