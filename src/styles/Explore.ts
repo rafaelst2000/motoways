@@ -13,6 +13,7 @@ export const ExploreContainer = styled('main', {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
+      gap: 20,
     },
 
     '.page-title': {
@@ -40,70 +41,17 @@ export const ExploreContainer = styled('main', {
     },
   },
 
-  '.side-content': {
-    paddingTop: '3.5rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-
-    button: {
-      background: '$gray-600',
-      border: 'none',
-      color: '$gray-200',
-      fontSize: '0.875rem',
-      fontWeight: '700',
-      lineHeight: 1,
-      padding: '12px 20px',
-      gap: '8px',
-      display: 'flex',
-      alignItems: 'center',
-      borderRadius: '8px',
-      transition: '0.2s all',
-
-      '&:hover': {
-        transform: 'scale(1.03)',
-        background: '$gray-700',
-      },
-    },
-
-    '.section-title': {
-      margin: '2.5rem 0 1rem',
-      width: '100%',
-      marginBottom: '1rem',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-
-      h2: {
-        fontSize: '0.875rem',
-        fontWeight: '400',
-        color: '$gray-100',
-      },
-
-      p: {
-        padding: '4px 8px',
-        color: '$purple-100',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        transition: '0.2s all',
-
-        '&:hover': {
-          color: '$purple-200',
-
-          svg: {
-            fill: '$purple-200',
-          },
-        },
-      },
-    },
-  },
-
   '.cards': {
     display: 'grid',
     gap: 20,
-    gridTemplateColumns: 'repeat(5, 1fr)',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, auto))',
+  },
+
+  '@media screen and (max-width: 1130px)': {
+    gridTemplateColumns: '1fr',
+    '.center-content': {
+      paddingTop: '0',
+    },
   },
 })
 

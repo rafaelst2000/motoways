@@ -81,4 +81,8 @@ export const SideMenuContainer = styled('aside', {
       },
     },
   },
+
+  '@media screen and (max-width: 1130px)': {
+    display: 'none',
+  },
 })

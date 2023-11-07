@@ -31,7 +31,7 @@ export default function Feed() {
     <ProfileContainer>
       <SideMenu />
       <div className="center-content">
-        <div className="page-title">
+        <div className="page-title desktop">
           <User size={32} color={'#50B2C0'} />
           <h1>Perfil</h1>
         </div>
@@ -42,22 +42,28 @@ export default function Feed() {
       </div>
 
       <div className="side-content">
+        <div className="page-title mobile">
+          <User size={32} color={'#50B2C0'} />
+          <h1>Perfil</h1>
+        </div>
         <div className="content">
           <Avatar variant="lg" url={rafael} />
           <h2>Rafael Trevisan</h2>
           <span>membro desde 2023</span>
           <div className="separator" />
 
-          {userData.map((item, index) => (
-            <div key={index} className="info-item">
-              {item.icon}
+          <div className="info-item-container">
+            {userData.map((item, index) => (
+              <div key={index} className="info-item">
+                {item.icon}
 
-              <div>
-                <h3>{item.label}</h3>
-                <p>{item.value}</p>
+                <div>
+                  <h3>{item.label}</h3>
+                  <p>{item.value}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </ProfileContainer>

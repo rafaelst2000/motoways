@@ -24,6 +24,11 @@ export const PostCardMinContainer = styled('div', {
       fontWeight: '700',
       lineHeight: '140%',
       color: '$gray-100',
+
+      display: '-webkit-box',
+      '-webkit-line-clamp': 1,
+      '-webkit-box-orient': 'vertical',
+      overflow: 'hidden',
     },
 
     span: {

@@ -8,16 +8,51 @@ export const FeedContainer = styled('main', {
 
   '.center-content': {
     paddingTop: '3.5rem',
-    '.page-title': {
+
+    '.page-title-container': {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'space-between',
       marginBottom: '2.5rem',
-      gap: 12,
 
-      h1: {
-        fontSize: '1.5rem',
+      button: {
+        height: 40,
+        padding: '0 20px',
+        borderRadius: 4,
+        background: '$gray-600',
         color: '$gray-100',
         fontWeight: 'bold',
+        transition: '0.2s',
+        border: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+
+        svg: {
+          width: 24,
+          height: 24,
+        },
+
+        '&:not(:disabled):hover': {
+          background: '$gray-500',
+        },
+        '&:disabled': {
+          cursor: 'not-allowed',
+          opacity: '0.6',
+        },
+      },
+
+      '.page-title': {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+
+        h1: {
+          fontSize: '1.5rem',
+          color: '$gray-100',
+          fontWeight: 'bold',
+        },
       },
     },
 
@@ -34,7 +69,7 @@ export const FeedContainer = styled('main', {
   },
 
   '.side-content': {
-    paddingTop: '3.5rem',
+    paddingTop: '7.5rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-end',
@@ -96,6 +131,27 @@ export const FeedContainer = styled('main', {
             fill: '$purple-200',
           },
         },
+      },
+    },
+  },
+
+  '@media screen and (max-width: 1366px)': {
+    gap: '1.5rem',
+  },
+
+  '@media screen and (max-width: 1130px)': {
+    gridTemplateColumns: '1fr',
+    '.center-content': {
+      paddingTop: '0',
+    },
+
+    '.side-content': {
+      display: 'none',
+    },
+
+    'center-content': {
+      '.recent': {
+        marginTop: '1rem !important',
       },
     },
   },

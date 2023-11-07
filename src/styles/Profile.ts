@@ -8,17 +8,21 @@ export const ProfileContainer = styled('main', {
 
   '.center-content': {
     paddingTop: '3.5rem',
+
     '.page-title': {
       display: 'flex',
-      alignItems: 'center',
-      marginBottom: '2.5rem',
-      gap: 12,
+    },
+  },
 
-      h1: {
-        fontSize: '1.5rem',
-        color: '$gray-100',
-        fontWeight: 'bold',
-      },
+  '.page-title': {
+    alignItems: 'center',
+    marginBottom: '2.5rem',
+    gap: 12,
+
+    h1: {
+      fontSize: '1.5rem',
+      color: '$gray-100',
+      fontWeight: 'bold',
     },
   },
 
@@ -60,10 +64,7 @@ export const ProfileContainer = styled('main', {
       alignItems: 'center',
       gap: 20,
       width: '100%',
-
-      '&:not(:first-of-type)': {
-        marginTop: '2.5rem',
-      },
+      marginTop: '2.5rem',
 
       h3: {
         fontSize: '1rem',
@@ -78,6 +79,55 @@ export const ProfileContainer = styled('main', {
         lineHeight: '160%',
         color: '$gray-300',
       },
+    },
+
+    '.mobile': {
+      display: 'none',
+    },
+
+    '.info-item-container': {
+      width: '100%',
+    },
+  },
+
+  '@media screen and (max-width: 1130px)': {
+    gridTemplateColumns: '1fr',
+
+    '.info-item-container': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 20,
+      flexWrap: 'wrap',
+
+      '.info-item': {
+        marginTop: '0',
+        justifyContent: 'center',
+      },
+    },
+
+    '.desktop': {
+      display: 'none !important',
+    },
+
+    '.mobile': {
+      display: 'flex !important',
+    },
+
+    '.center-content': {
+      paddingTop: '0',
+    },
+
+    '.side-content': {
+      gridArea: 1,
+      '.content': {
+        padding: '0',
+        borderLeft: '0',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      },
+      paddingTop: '0rem',
     },
   },
 })

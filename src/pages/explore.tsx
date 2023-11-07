@@ -65,18 +65,30 @@ export default function Explore() {
         </TagsContainer>
 
         <div className="cards">
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
-          <PostCardMin />
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
+          <div className="card">
+            <PostCardMin />
+          </div>
         </div>
       </div>
     </ExploreContainer>

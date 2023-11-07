@@ -12,9 +12,17 @@ export default function Feed() {
     <FeedContainer>
       <SideMenu />
       <div className="center-content">
-        <div className="page-title">
-          <ChartLineUp size={32} color={'#50B2C0'} />
-          <h1>Início</h1>
+        <div className="page-title-container">
+          <div className="page-title">
+            <ChartLineUp size={32} color={'#50B2C0'} />
+            <h1>Início</h1>
+          </div>
+          <CreateRouteDialog>
+            <button>
+              <PlusCircle color={'#50b2c0'} size={24} />
+              Criar roteiro
+            </button>
+          </CreateRouteDialog>
         </div>
 
         <h2>Seu último passeio</h2>
@@ -26,13 +34,6 @@ export default function Feed() {
       </div>
 
       <div className="side-content">
-        <CreateRouteDialog>
-          <button>
-            <PlusCircle color={'#50b2c0'} size={16} />
-            Criar roteiro
-          </button>
-        </CreateRouteDialog>
-
         <div className="section-title">
           <h2>Destinos populares</h2>
           <p>
