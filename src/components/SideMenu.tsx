@@ -1,5 +1,6 @@
 import { SideMenuContainer } from '@/styles/components/SideMenu'
 import { ChartLineUp, User, Binoculars, SignOut } from '@phosphor-icons/react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Avatar from './Avatar'
 
@@ -9,6 +10,9 @@ import { useRouter } from 'next/router'
 
 export default function SideMenu() {
   const router = useRouter()
+  const session = useSession()
+  const user = session.data?.user
+  const { name, image } = session.data?.user
 
   function goToPage(page: string) {
     router.push(`/${page}`)
@@ -60,8 +64,8 @@ export default function SideMenu() {
       </ul>
 
       <div className="user-container">
-        <Avatar url={rafael} variant={'xs'} />
-        <p>Rafael T</p>
+        <Avatar url={image} variant={'xs'} />
+        <p>{name}</p>
         <SignOut size={20} color="#F75A68" onClick={() => goToPage('')} />
       </div>
     </SideMenuContainer>

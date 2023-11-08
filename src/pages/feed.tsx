@@ -5,9 +5,19 @@ import PostCardMy from '@/components/PostCardMy'
 import SideMenu from '@/components/SideMenu'
 import { FeedContainer } from '@/styles/Feed'
 import { CaretRight, ChartLineUp, PlusCircle } from '@phosphor-icons/react'
-import Head from 'next/head'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { GetServerSideProps } from 'next'
+import { getUserLastRoute } from '@/utils/routes'
 
-export default function Feed() {
+import Head from 'next/head'
+import { Route } from '@/types'
+
+interface FeedProps {
+  userLastRoute: Route
+}
+
+export default function Feed({ userLastRoute }: FeedProps) {
   return (
     <FeedContainer>
       <SideMenu />
@@ -26,7 +36,7 @@ export default function Feed() {
         </div>
 
         <h2>Seu último passeio</h2>
-        <PostCardMy />
+        <PostCardMy route={userLastRoute} />
 
         <h2 className="recent">Avaliações mais recentes</h2>
         <PostCard />
@@ -49,4 +59,23 @@ export default function Feed() {
       </div>
     </FeedContainer>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions)
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+  const userLastRoute = (await getUserLastRoute(session.user.id)) as Route
+  return {
+    props: {
+      session,
+      userLastRoute,
+    },
+  }
 }

@@ -33,6 +33,10 @@ export const PostCardMyContainer = styled('div', {
       borderRadius: 4,
     },
 
+    '> div': {
+      flex: 1,
+    },
+
     '.card-info': {
       display: 'flex',
       justifyContent: 'space-between',

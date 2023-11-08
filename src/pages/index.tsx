@@ -7,12 +7,21 @@ import googleIcon from '@/assets/GoogleIcon.svg'
 import facebookIcon from '@/assets/FacebookIcon.svg'
 import logo from '@/assets/Logo.png'
 import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { GetServerSideProps } from 'next'
+import { getServerSession } from 'next-auth'
 
 export default function Home() {
   const router = useRouter()
 
   function goToFeed() {
     router.push('/feed')
+  }
+
+  function loginGoogle(e: any) {
+    e.preventDefault()
+    signIn('google')
   }
 
   return (
@@ -48,7 +57,7 @@ export default function Home() {
             </div>
             <h1>Boas vindas!</h1>
             <p>Faça seu login e encontre as melhores rotas</p>
-            <HomeButton className="margin" onClick={goToFeed}>
+            <HomeButton className="margin" onClick={loginGoogle}>
               <Image
                 src={googleIcon}
                 alt="Google icon"
@@ -71,4 +80,24 @@ export default function Home() {
       </HomeContainer>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions)
+
+  if (session) {
+    return {
+      props: {
+        session,
+      },
+      redirect: {
+        destination: '/feed',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
