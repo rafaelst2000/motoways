@@ -16,7 +16,6 @@ import {
 import * as Dialog from '@radix-ui/react-dialog'
 import { ReactNode, useState } from 'react'
 
-import rastro from '@/assets/rastro.jpg'
 import map from '@/assets/map.png'
 import Image from 'next/image'
 import Stars from './Stars'
@@ -26,9 +25,19 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { CommentCard } from './CommentCard'
 import { RatingForm } from './RatingForm'
-
+import { Route } from '@/types'
+import { getUf } from '@/utils/ufs'
+import { getRouteDetails, addRouteComment } from '@/utils/routes'
+import { useSession } from 'next-auth/react'
+import { v4 as uuidv4 } from 'uuid'
 type RouteDetailsProps = {
   children: ReactNode
+  route: Route
+}
+
+interface FormData {
+  description: string
+  rate: number
 }
 
 function NextArrow(props: any) {
@@ -57,26 +66,50 @@ function PreviousArrow(props: any) {
   )
 }
 
-export const RouteDetailsDialog = ({ children }: RouteDetailsProps) => {
+export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: route.images.length < 3 ? route.images.length : 3,
+    slidesToScroll: 1,
     dots: false,
     className: 'carrousel-container',
     nextArrow: <NextArrow />,
     prevArrow: <PreviousArrow />,
   }
-
   const [showForm, setShowForm] = useState(false)
+  const [loading, setIsLoading] = useState(false)
+  const [selectedRoute, setSelectedRoute] = useState<Route>({} as Route)
+  const session = useSession()
 
   function handleComment() {
     setShowForm(true)
   }
 
+  async function handleConfirmComment(data: FormData) {
+    setShowForm(false)
+    const newComment = {
+      ...data,
+      publish_at: new Date().toISOString(),
+      route_id: route.id,
+      user_id: session.data?.user.id,
+      id: uuidv4(),
+    }
+    await addRouteComment(newComment)
+    await onOpenModal(true)
+  }
+
+  async function onOpenModal(isOpen: boolean) {
+    if (isOpen) {
+      setIsLoading(true)
+      const routeDetails = await getRouteDetails(route)
+      setSelectedRoute(routeDetails)
+      setIsLoading(false)
+    }
+  }
+
   return (
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={onOpenModal}>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
       <Dialog.Portal>
@@ -86,85 +119,96 @@ export const RouteDetailsDialog = ({ children }: RouteDetailsProps) => {
             <X size={24} />
           </DialogClose>
 
-          <RouteDetailsWrapper>
-            <div className="image-title-container">
-              <Image src={rastro} alt="" width={157} height={130} />
+          {loading ? (
+            <span>Loading...</span>
+          ) : (
+            <>
+              <RouteDetailsWrapper>
+                <div className="image-title-container">
+                  <Image
+                    src={route.images[0]}
+                    alt=""
+                    width={157}
+                    height={130}
+                  />
 
-              <div className="title-container">
-                <div>
-                  <h2>Charqueadas x Viaduto 13</h2>
-                  <span>Rio Grande do Sul</span>
-                </div>
-
-                <div className="route-info">
-                  <Stars rating={4} />
-
-                  <div className="distance">
-                    <MapPin size={24} color={'#50B2C0'} />
+                  <div className="title-container">
                     <div>
-                      <p>Distância</p>
-                      <h3>270km</h3>
+                      <h2>{route.title}</h2>
+                      <span>{getUf(route.uf)}</span>
+                    </div>
+
+                    <div className="route-info">
+                      <Stars rating={route.rate} />
+
+                      <div className="distance">
+                        <MapPin size={24} color={'#50B2C0'} />
+                        <div>
+                          <p>Distância</p>
+                          <h3>{route.distance}km</h3>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <p className="route-description">
-              Semper et sapien proin vitae nisi. Feugiat neque integer donec et
-              aenean posuere amet ultrices. Cras fermentum id pulvinar varius
-              leo a in. Amet libero pharetra nunc elementum fringilla velit
-              ipsum. Sed vulputate massa velit nibh
-            </p>
+                <p className="route-description">{route.description}</p>
 
-            <Slider {...settings}>
-              <div className="carrousel-item">
-                <Image src={rastro} alt="" width={125} height={125} />
-              </div>
-              <div className="carrousel-item">
-                <Image src={map} alt="" width={125} height={125} />
-              </div>
-              <div className="carrousel-item">
-                <Image src={rastro} alt="" width={125} height={125} />
-              </div>
-              <div className="carrousel-item">
-                <Image src={map} alt="" width={125} height={125} />
-              </div>
-            </Slider>
+                {route.images.length > 3 ? (
+                  <Slider {...settings}>
+                    {route.images.map((image) => (
+                      <div key={image} className="carrousel-item">
+                        <Image src={image} alt="" width={125} height={125} />
+                      </div>
+                    ))}
+                  </Slider>
+                ) : (
+                  <div className="images-container">
+                    {route.images.map((image) => (
+                      <div key={image} className="carrousel-item">
+                        <Image src={image} alt="" width={125} height={125} />
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-            <div className="map-container">
-              <Image src={map} alt="" width={503} height={220} />
-            </div>
+                <div className="map-container">
+                  <Image src={map} alt="" width={503} height={220} />
+                </div>
 
-            <div className="actions-container">
-              <button>
-                <Heart size={24} color="#50B2C0" />
-                Favoritar
-              </button>
+                <div className="actions-container">
+                  <button>
+                    <Heart size={24} color="#50B2C0" />
+                    Favoritar
+                  </button>
 
-              <button>
-                <PaperPlaneTilt size={24} color="#50B2C0" />
-                Ver no maps
-              </button>
-            </div>
-          </RouteDetailsWrapper>
+                  <button>
+                    <PaperPlaneTilt size={24} color="#50B2C0" />
+                    Ver no maps
+                  </button>
+                </div>
+              </RouteDetailsWrapper>
 
-          <RouteCommentsWrapper>
-            <div className="comment-actions">
-              <span>Comentários</span>
-              {!showForm && <p onClick={handleComment}>Comentar</p>}
-            </div>
+              <RouteCommentsWrapper>
+                <div className="comment-actions">
+                  <span>Comentários</span>
+                  {!showForm && <p onClick={handleComment}>Comentar</p>}
+                </div>
 
-            <ul>
-              {showForm && (
-                <RatingForm
-                  onCancel={() => setShowForm(false)}
-                  routeId="teste"
-                />
-              )}
-              <CommentCard />
-              <CommentCard />
-            </ul>
-          </RouteCommentsWrapper>
+                <ul>
+                  {showForm && (
+                    <RatingForm
+                      onCancel={() => setShowForm(false)}
+                      onConfirm={handleConfirmComment}
+                    />
+                  )}
+                  {Array.isArray(selectedRoute.comments) &&
+                    selectedRoute.comments.map((comment) => (
+                      <CommentCard key={comment.id} comment={comment} />
+                    ))}
+                </ul>
+              </RouteCommentsWrapper>
+            </>
+          )}
         </DialogContent>
       </Dialog.Portal>
     </Dialog.Root>

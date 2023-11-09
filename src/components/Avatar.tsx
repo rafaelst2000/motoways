@@ -3,7 +3,7 @@ import Image, { StaticImageData } from 'next/image'
 
 export interface AvatarProps {
   variant: 'xs' | 'sm' | 'lg'
-  url: StaticImageData
+  url: StaticImageData | string
 }
 
 export default function Avatar({ variant, url }: AvatarProps) {

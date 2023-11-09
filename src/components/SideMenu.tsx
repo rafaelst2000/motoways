@@ -1,6 +1,6 @@
 import { SideMenuContainer } from '@/styles/components/SideMenu'
 import { ChartLineUp, User, Binoculars, SignOut } from '@phosphor-icons/react'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Avatar from './Avatar'
 
@@ -66,7 +66,11 @@ export default function SideMenu() {
       <div className="user-container">
         <Avatar url={image} variant={'xs'} />
         <p>{name}</p>
-        <SignOut size={20} color="#F75A68" onClick={() => goToPage('')} />
+        <SignOut
+          size={20}
+          color="#F75A68"
+          onClick={() => signOut({ callbackUrl: '/' })}
+        />
       </div>
     </SideMenuContainer>
   )

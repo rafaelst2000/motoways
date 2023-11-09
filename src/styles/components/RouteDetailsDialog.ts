@@ -46,6 +46,7 @@ export const RouteDetailsWrapper = styled('div', {
     gap: '1rem',
     borderBottom: '1px solid $gray-600',
     paddingBottom: '1rem',
+    paddingBottom: '1rem',
     marginBottom: '1rem',
 
     img: {
@@ -126,6 +127,13 @@ export const RouteDetailsWrapper = styled('div', {
     img: {
       borderRadius: 8,
     },
+  },
+
+  '.images-container': {
+    marginTop: '20px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-evenly',
   },
 
   '.actions-container': {

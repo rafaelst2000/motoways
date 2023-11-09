@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
       return false
     },
     async session({ session }) {
-      const newUser = await createUserIfNotExists(session)
+      const newUser = await createUserIfNotExists(session?.user)
       if (newUser && newUser.id) {
         session.user = newUser
       } else {

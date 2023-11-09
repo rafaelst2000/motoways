@@ -5,37 +5,34 @@ import rafael from '@/assets/rafael.png'
 import rastro from '@/assets/rastro.jpg'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
-/* export interface AvatarProps {
-  variant: 'xs' | 'sm' | 'lg'
-  url: StaticImageData
-} */
+import { Route } from '@/types'
+import { formattedRelativeDate } from '@/utils/date-fns'
 
-export default function PostCard() {
+interface PostCardProps {
+  route: Route
+}
+
+export default function PostCard({ route }: PostCardProps) {
   return (
-    <RouteDetailsDialog>
+    <RouteDetailsDialog route={route}>
       <PostCardContainer>
         <div className="base-info">
-          <Avatar url={rafael} variant="sm" />
+          {route.user?.image && <Avatar url={route.user.image} variant="sm" />}
           <div>
-            <h3>Rafael Trevisan</h3>
-            <span>Hoje</span>
+            <h3>{route.user?.name}</h3>
+            <span>{formattedRelativeDate(route.publish_at)}</span>
           </div>
 
-          <Stars size="md" rating={4} />
+          <Stars size="md" rating={route.rate} />
         </div>
 
         <div className="card-content">
-          <Image width={108} height={152} alt="" src={rastro} />
+          <Image width={108} height={152} alt="" src={route.images[0]} />
 
           <div>
-            <h4>São Jerônimo x Serra do Rio do Rastro</h4>
-            <span>140km</span>
-            <p>
-              Semper et sapien proin vitae nisi. Feugiat neque integer donec et
-              aenean posuere amet ultrices. Cras fermentum id pulvinar varius
-              leo a in. Amet libero pharetra nunc elementum fringilla velit
-              ipsum. Sed vulputate massa velit nibh
-            </p>
+            <h4>{route.title}</h4>
+            <span>{route.distance}km</span>
+            <p>{route.description}</p>
           </div>
         </div>
       </PostCardContainer>

@@ -8,16 +8,17 @@ import { CaretRight, ChartLineUp, PlusCircle } from '@phosphor-icons/react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { GetServerSideProps } from 'next'
-import { getUserLastRoute } from '@/utils/routes'
+import { getUserLastRoute, getFeedRoutes } from '@/utils/routes'
 
 import Head from 'next/head'
 import { Route } from '@/types'
 
 interface FeedProps {
   userLastRoute: Route
+  feedRoutes: Route[]
 }
 
-export default function Feed({ userLastRoute }: FeedProps) {
+export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
   return (
     <FeedContainer>
       <SideMenu />
@@ -35,12 +36,17 @@ export default function Feed({ userLastRoute }: FeedProps) {
           </CreateRouteDialog>
         </div>
 
-        <h2>Seu último passeio</h2>
-        <PostCardMy route={userLastRoute} />
+        {userLastRoute && (
+          <>
+            <h2>Seu último passeio</h2>
+            <PostCardMy route={userLastRoute} />
+          </>
+        )}
 
         <h2 className="recent">Avaliações mais recentes</h2>
-        <PostCard />
-        <PostCard />
+        {feedRoutes.map((route) => (
+          <PostCard key={route.id} route={route} />
+        ))}
       </div>
 
       <div className="side-content">
@@ -71,11 +77,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     }
   }
-  const userLastRoute = (await getUserLastRoute(session.user.id)) as Route
+  const userLastRoute = (await getUserLastRoute(session.user?.id)) as Route
+  const feedRoutes = (await getFeedRoutes(session.user?.id)) as Route[]
   return {
     props: {
       session,
       userLastRoute,
+      feedRoutes,
     },
   }
 }

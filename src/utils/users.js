@@ -23,12 +23,14 @@ export const getUserByEmail = async (email) => {
 }
 
 export const getUserById = async (id) => {
+  const users = []
   const q = query(collection(firestore, 'users'), where('id', '==', id))
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
-    const id = uuidv4()
-    console.log(id)
+    users.push(doc.data())
   })
+
+  return users[0]
 }
 
 export const createUserIfNotExists = async (user) => {

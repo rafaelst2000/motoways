@@ -2,24 +2,26 @@ import { CommentCardContainer } from '@/styles/components/RouteDetailsDialog'
 import Avatar from './Avatar'
 import Stars from './Stars'
 import rafael from '@/assets/rafael.png'
+import { RouteComment } from '@/types'
+import { formattedRelativeDate } from '@/utils/date-fns'
 
-export const CommentCard = () => {
+interface CommentCardProps {
+  comment: RouteComment
+}
+
+export const CommentCard = ({ comment }: CommentCardProps) => {
   return (
     <CommentCardContainer>
       <div className="card-header">
-        <Avatar url={rafael} variant="sm" />
+        <Avatar url={comment.user.image || ''} variant="sm" />
         <div className="person-info">
-          <h3>Rafael Trevisan</h3>
-          <span>Há 2 dias</span>
+          <h3>{comment.user.name}</h3>
+          <span>{formattedRelativeDate(comment.publish_at)}</span>
         </div>
-        <Stars size="sm" rating={4} />
+        <Stars size="sm" rating={comment.rate} />
       </div>
 
-      <p>
-        Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis.
-        Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta
-        eget nec vitae sit vulputate eget
-      </p>
+      <p>{comment.description}</p>
     </CommentCardContainer>
   )
 }

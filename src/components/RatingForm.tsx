@@ -3,21 +3,34 @@ import {
   FormContainer,
   RatingFormContainer,
 } from '@/styles/components/RouteDetailsDialog'
-import { useState } from 'react'
+import { useState, Event } from 'react'
 import Avatar from './Avatar'
 import Stars from './Stars'
 import rafael from '@/assets/rafael.png'
 import { TextArea } from './TextArea'
 import { Check, X } from '@phosphor-icons/react'
+interface FormData {
+  description: string
+  rate: number
+}
 
 type RatingFormProps = {
   onCancel: () => void
-  routeId: string
+  onConfirm: (formData: FormData) => void
 }
 
-export const RatingForm = ({ onCancel, routeId }: RatingFormProps) => {
+export const RatingForm = ({ onCancel, onConfirm }: RatingFormProps) => {
   const [description, setDescription] = useState('')
   const [currentRate, setCurrentRate] = useState(0)
+
+  function submitForm(event: Event) {
+    event.preventDefault()
+    const formData = {
+      description,
+      rate: currentRate,
+    }
+    onConfirm(formData)
+  }
 
   return (
     <RatingFormContainer>
@@ -29,7 +42,7 @@ export const RatingForm = ({ onCancel, routeId }: RatingFormProps) => {
         <Stars rating={currentRate} size="lg" setRating={setCurrentRate} />
       </div>
 
-      <FormContainer>
+      <FormContainer onSubmit={submitForm}>
         <TextArea
           placeholder="Escreva sua avaliação"
           maxLength={450}
