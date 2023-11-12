@@ -10,7 +10,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { GetServerSideProps } from 'next'
 import { getUserLastRoute, getFeedRoutes } from '@/utils/routes'
 import Head from 'next/head'
-import { Route } from '@/types'
+import { Route } from '@/@types'
 
 interface FeedProps {
   userLastRoute: Route

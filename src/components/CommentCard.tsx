@@ -1,5 +1,5 @@
 import { CommentCardContainer } from '@/styles/components/RouteDetailsDialog'
-import { RouteComment } from '@/types'
+import { RouteComment } from '@/@types'
 import { formattedRelativeDate } from '@/utils/date-fns'
 
 import Avatar from './Avatar'

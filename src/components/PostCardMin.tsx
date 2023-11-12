@@ -4,7 +4,7 @@ import rastro from '@/assets/rastro.jpg'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
 import { getUf } from '@/utils/ufs'
-import { Route } from '@/types'
+import { Route } from '@/@types'
 
 interface PostCardMinProps {
   showDetails?: boolean

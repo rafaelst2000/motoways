@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Avatar from './Avatar'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
-import { Route } from '@/types'
+import { Route } from '@/@types'
 import { formattedRelativeDate } from '@/utils/date-fns'
 import { formatNumber } from '@/utils/format-number'
 

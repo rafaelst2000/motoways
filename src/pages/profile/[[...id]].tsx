@@ -11,7 +11,7 @@ import {
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { Route, User } from '@/types'
+import { Route, User } from '@/@types'
 import { getUserRoutes } from '@/utils/routes'
 import { getUserById, getUserAdditionalInfo } from '@/utils/users'
 import Head from 'next/head'
