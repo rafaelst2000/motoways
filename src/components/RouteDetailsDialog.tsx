@@ -43,9 +43,9 @@ interface FormData {
 }
 
 interface ArrowProps {
-  className: string
-  style: CSSProperties
-  onClick: () => void
+  className?: string
+  style?: CSSProperties
+  onClick?: () => void
 }
 
 function NextArrow({ className, style, onClick }: ArrowProps) {
