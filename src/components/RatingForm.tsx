@@ -8,7 +8,7 @@ import Avatar from './Avatar'
 import Stars from './Stars'
 import rafael from '@/assets/rafael.png'
 import { TextArea } from './TextArea'
-import { Check, X } from '@phosphor-icons/react'
+import { Check, X } from 'phosphor-react'
 interface FormData {
   description: string
   rate: number

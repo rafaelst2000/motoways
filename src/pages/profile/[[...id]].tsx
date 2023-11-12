@@ -7,7 +7,7 @@ import {
   MapPin,
   MapTrifold,
   User as UserIcon,
-} from '@phosphor-icons/react'
+} from 'phosphor-react'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'

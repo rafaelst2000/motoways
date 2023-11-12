@@ -1,5 +1,5 @@
 import { StarsContainer } from '@/styles/components/Stars'
-import { Star } from '@phosphor-icons/react'
+import { Star } from 'phosphor-react'
 import { ComponentProps, useState } from 'react'
 
 type StarProps = ComponentProps<typeof StarsContainer> & {

@@ -1,7 +1,7 @@
 import { Input } from '@/components/Input'
 import { ExploreContainer, TagsContainer } from '@/styles/Explore'
 import { useState, useEffect } from 'react'
-import { Binoculars, MagnifyingGlass } from '@phosphor-icons/react'
+import { Binoculars, MagnifyingGlass } from 'phosphor-react'
 import { Tag } from '@/components/Tag'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'

@@ -1,5 +1,5 @@
 import { SideMenuContainer } from '@/styles/components/SideMenu'
-import { ChartLineUp, User, Binoculars, SignOut } from '@phosphor-icons/react'
+import { ChartLineUp, User, Binoculars, SignOut } from 'phosphor-react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 

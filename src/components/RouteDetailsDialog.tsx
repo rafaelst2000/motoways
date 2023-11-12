@@ -12,7 +12,7 @@ import {
   MapPin,
   PaperPlaneTilt,
   X,
-} from '@phosphor-icons/react'
+} from 'phosphor-react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { CSSProperties, ReactNode, useState } from 'react'
 

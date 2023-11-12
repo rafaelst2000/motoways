@@ -6,7 +6,7 @@ import {
   CreateRouteDialogWrapper,
   ActionsContainer,
 } from '@/styles/components/CreateRouteDialog'
-import { Check, X } from '@phosphor-icons/react'
+import { Check, X } from 'phosphor-react'
 import { ReactNode, useState } from 'react'
 
 import map from '@/assets/map.png'
