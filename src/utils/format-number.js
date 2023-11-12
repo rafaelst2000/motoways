@@ -1,4 +1,5 @@
 export const localeString = (value, digits, language = 'pt-BR') => {
+  value = Number(value)
   if (!value && value !== 0) return value
   if (digits === 0) return Math.trunc(value).toLocaleString(language)
   if (!digits) return value.toLocaleString(language)
@@ -8,10 +9,9 @@ export const localeString = (value, digits, language = 'pt-BR') => {
   })
 }
 
-export const formatNumber = (value, digits = 1) => {
+export const formatNumber = (value) => {
   if (value === '-') return value
   if (value || value === 0) {
-    if (typeof value === 'number') return localeString(value, digits)
-    return localeString(value)
+    return localeString(value, 1)
   } else return '-'
 }
