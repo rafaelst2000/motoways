@@ -25,7 +25,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { CommentCard } from './CommentCard'
 import { RatingForm } from './RatingForm'
-import { Route } from '@/types'
+import { Route, User } from '@/types'
 import { getUf } from '@/utils/ufs'
 import { getRouteDetails, addRouteComment } from '@/utils/routes'
 import { useSession } from 'next-auth/react'
@@ -87,6 +87,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   const [loading, setIsLoading] = useState(false)
   const [selectedRoute, setSelectedRoute] = useState<Route>({} as Route)
   const session = useSession()
+  const user = session?.data?.user as User
 
   function handleComment() {
     setShowForm(true)
@@ -98,7 +99,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
       ...data,
       publish_at: new Date().toISOString(),
       route_id: route.id,
-      user_id: session.data?.user.id,
+      user_id: user?.id,
       id: uuidv4(),
     }
     await addRouteComment(newComment)
