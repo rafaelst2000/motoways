@@ -9,7 +9,6 @@ export const localeString = (value, digits, language = 'pt-BR') => {
 }
 
 export const formatNumber = (value, digits = 1) => {
-  console.log('eu')
   if (value === '-') return value
   if (value || value === 0) {
     if (typeof value === 'number') return localeString(value, digits)
