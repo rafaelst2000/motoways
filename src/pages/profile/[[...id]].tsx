@@ -2,12 +2,7 @@ import Avatar from '@/components/Avatar'
 import PostCardMy from '@/components/PostCardMy'
 import SideMenu from '@/components/SideMenu'
 import { ProfileContainer } from '@/styles/Profile'
-import {
-  ChatText,
-  MapPin,
-  MapTrifold,
-  User as UserIcon,
-} from 'phosphor-react'
+import { ChatText, MapPin, MapTrifold, User as UserIcon } from 'phosphor-react'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
