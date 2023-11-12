@@ -1,7 +1,5 @@
 import { PostCardMyContainer } from '@/styles/components/PostCardMy'
-import Image, { StaticImageData } from 'next/image'
-import Avatar from './Avatar'
-import rafael from '@/assets/rafael.png'
+import Image from 'next/image'
 import rastro from '@/assets/rastro.jpg'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
@@ -13,7 +11,7 @@ interface PostCardMyProps {
 
 export default function PostCardMy({ route }: PostCardMyProps) {
   return (
-    <RouteDetailsDialog>
+    <RouteDetailsDialog route={route}>
       <PostCardMyContainer>
         <div className="card-content">
           <Image width={108} height={152} alt="" src={rastro} />

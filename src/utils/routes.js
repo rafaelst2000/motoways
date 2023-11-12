@@ -8,7 +8,6 @@ import {
   orderBy,
   limit,
 } from 'firebase/firestore'
-import { v4 as uuidv4 } from 'uuid'
 import { getUserById } from './users'
 
 export const getUserLastRoute = async (userId = '') => {
@@ -33,14 +32,54 @@ export const getUserLastRoute = async (userId = '') => {
   }
 }
 
-export const getFeedRoutes = async (userId = '') => {
+export const getFilteredRoutes = async (uf = '') => {
+  try {
+    const routes = []
+    const q = uf
+      ? query(
+          collection(firestore, 'routes'),
+          where('uf', '==', uf),
+          orderBy('publish_at', 'desc'),
+        )
+      : query(collection(firestore, 'routes'), orderBy('publish_at', 'desc'))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      routes.push(doc.data())
+    })
+
+    return routes.length > 0 ? routes : null
+  } catch (error) {
+    console.error('Erro ao buscar rotas:', error)
+    return null
+  }
+}
+
+export const getUserRoutes = async (userId = '') => {
   if (!userId) return null
   try {
     const routes = []
     const q = query(
       collection(firestore, 'routes'),
-      orderBy('user_id'),
-      where('user_id', '!=', userId),
+      where('user_id', '==', userId),
+      orderBy('publish_at', 'desc'),
+    )
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      routes.push(doc.data())
+    })
+
+    return routes.length > 0 ? routes : null
+  } catch (error) {
+    console.error('Erro ao buscar rotas do usuário:', error)
+    return null
+  }
+}
+
+export const getFeedRoutes = async (userId = '') => {
+  if (!userId) return null
+  try {
+    const q = query(
+      collection(firestore, 'routes'),
       orderBy('publish_at', 'desc'),
       limit(10),
     )
@@ -67,7 +106,6 @@ export const getFeedRoutes = async (userId = '') => {
 export const getRouteDetails = async (route) => {
   if (!route) return null
   try {
-    const comments = []
     const q = query(
       collection(firestore, 'comments'),
       orderBy('route_id'),

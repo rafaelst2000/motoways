@@ -44,7 +44,7 @@ export const ExploreContainer = styled('main', {
   '.cards': {
     display: 'grid',
     gap: 20,
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, auto))',
+    gridTemplateColumns: 'repeat(auto-fit, 350px)',
   },
 
   '@media screen and (max-width: 1130px)': {

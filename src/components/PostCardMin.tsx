@@ -1,36 +1,49 @@
 import { PostCardMinContainer } from '@/styles/components/PostCardMin'
-import Image, { StaticImageData } from 'next/image'
-import Avatar from './Avatar'
-import rafael from '@/assets/rafael.png'
+import Image from 'next/image'
 import rastro from '@/assets/rastro.jpg'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
+import { getUf } from '@/utils/ufs'
+import { Route } from '@/types'
 
 interface PostCardMinProps {
   showDetails?: boolean
+  route: Route
 }
 
-export default function PostCardMin({ showDetails = false }: PostCardMinProps) {
+export default function PostCardMin({
+  showDetails = false,
+  route,
+  ...props
+}: PostCardMinProps) {
   return (
-    /*  <>
-      {showDetails ? <RouteDetailsDialog route={}><CardContent /></RouteDetailsDialog> : <CardContent />}
-    </> */
-    <CardContent />
+    <>
+      {showDetails ? (
+        <RouteDetailsDialog route={route}>
+          <CardContent route={route} {...props} />
+        </RouteDetailsDialog>
+      ) : (
+        <CardContent route={route} />
+      )}
+    </>
   )
 }
 
-function CardContent() {
+interface CardContentProps {
+  route: Route
+}
+function CardContent({ route, ...props }: CardContentProps) {
   return (
-    <PostCardMinContainer>
+    <PostCardMinContainer {...props}>
       <div className="card-content">
         <Image width={64} height={94} alt="" src={rastro} />
 
         <div className="card-info">
           <div className="card-title">
-            <h4>Serra do Rio do Rastro</h4>
-            <span>Santa Catarina</span>
+            <h4>{route.title}</h4>
+            <span>{getUf(route.uf)}</span>
           </div>
-          <Stars size="sm" rating={3} />
+          <Stars size="sm" rating={route.rate} />
         </div>
       </div>
     </PostCardMinContainer>

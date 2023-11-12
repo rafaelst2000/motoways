@@ -33,6 +33,36 @@ export const getUserById = async (id) => {
   return users[0]
 }
 
+export const getUserAdditionalInfo = async (id) => {
+  const userRoutes = []
+  const userComments = []
+  const q = query(collection(firestore, 'routes'), where('user_id', '==', id))
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    userRoutes.push(doc.data())
+  })
+
+  const commentQuery = query(
+    collection(firestore, 'comments'),
+    where('user_id', '==', id),
+  )
+  const commentQuerySnapshot = await getDocs(commentQuery)
+  commentQuerySnapshot.forEach((doc) => {
+    userComments.push(doc.data())
+  })
+
+  const data = {
+    publishedRoutes: userRoutes.length,
+    km:
+      userRoutes.length > 0
+        ? userRoutes.reduce((total, obj) => total + obj.distance, 0)
+        : 0,
+    comments: userComments.length,
+  }
+
+  return data
+}
+
 export const createUserIfNotExists = async (user) => {
   if (!user && !user.email) return
   const allUsers = await getUsers()

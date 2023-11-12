@@ -1,18 +1,17 @@
 import { SideMenuContainer } from '@/styles/components/SideMenu'
 import { ChartLineUp, User, Binoculars, SignOut } from '@phosphor-icons/react'
 import { useSession, signOut } from 'next-auth/react'
+import { useRouter } from 'next/router'
+
 import Image from 'next/image'
 import Avatar from './Avatar'
 
 import logo from '@/assets/Logo.png'
-import rafael from '@/assets/rafael.png'
-import { useRouter } from 'next/router'
 
 export default function SideMenu() {
   const router = useRouter()
   const session = useSession()
-  const user = session.data?.user
-  const { name, image } = session.data?.user
+  const user = session?.data?.user
 
   function goToPage(page: string) {
     router.push(`/${page}`)
@@ -52,20 +51,22 @@ export default function SideMenu() {
           Explorar
         </li>
         <li
-          className={router.pathname === '/profile' ? 'selected' : ''}
+          className={router.pathname === '/profile/[[...id]]' ? 'selected' : ''}
           onClick={() => goToPage('profile')}
         >
           <User
             size={24}
-            color={router.pathname === '/profile' ? '#F8F9FC' : '#8d95af'}
+            color={
+              router.pathname === '/profile/[[...id]]' ? '#F8F9FC' : '#8d95af'
+            }
           />
           Perfil
         </li>
       </ul>
 
       <div className="user-container">
-        <Avatar url={image} variant={'xs'} />
-        <p>{name}</p>
+        <Avatar url={user?.image || ''} variant={'xs'} />
+        <p>{user?.name || ''}</p>
         <SignOut
           size={20}
           color="#F75A68"

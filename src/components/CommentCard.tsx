@@ -1,9 +1,9 @@
 import { CommentCardContainer } from '@/styles/components/RouteDetailsDialog'
-import Avatar from './Avatar'
-import Stars from './Stars'
-import rafael from '@/assets/rafael.png'
 import { RouteComment } from '@/types'
 import { formattedRelativeDate } from '@/utils/date-fns'
+
+import Avatar from './Avatar'
+import Stars from './Stars'
 
 interface CommentCardProps {
   comment: RouteComment

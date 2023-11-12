@@ -19,7 +19,7 @@ export default function Home() {
     router.push('/feed')
   }
 
-  function loginGoogle(e: any) {
+  function loginGoogle(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     signIn('google')
   }
@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Motoways - Login </title>
+        <title>Motoways | Login</title>
       </Head>
       <HomeContainer>
         <Image

@@ -14,7 +14,7 @@ import {
   X,
 } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { ReactNode, useState } from 'react'
+import { CSSProperties, ReactNode, useState } from 'react'
 
 import map from '@/assets/map.png'
 import Image from 'next/image'
@@ -30,18 +30,25 @@ import { getUf } from '@/utils/ufs'
 import { getRouteDetails, addRouteComment } from '@/utils/routes'
 import { useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
+import Loading from './Loading'
+import { formatNumber } from '@/utils/format-number'
+
 type RouteDetailsProps = {
   children: ReactNode
   route: Route
 }
-
 interface FormData {
   description: string
   rate: number
 }
 
-function NextArrow(props: any) {
-  const { className, style, onClick } = props
+interface ArrowProps {
+  className: string
+  style: CSSProperties
+  onClick: () => void
+}
+
+function NextArrow({ className, style, onClick }: ArrowProps) {
   return (
     <CaretRight
       className={className}
@@ -53,8 +60,7 @@ function NextArrow(props: any) {
   )
 }
 
-function PreviousArrow(props: any) {
-  const { className, style, onClick } = props
+function PreviousArrow({ className, style, onClick }: ArrowProps) {
   return (
     <CaretLeft
       className={className}
@@ -70,7 +76,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: route.images.length < 3 ? route.images.length : 3,
+    slidesToShow: route?.images.length < 3 ? route.images.length : 3,
     slidesToScroll: 1,
     dots: false,
     className: 'carrousel-container',
@@ -119,14 +125,14 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
             <X size={24} />
           </DialogClose>
 
-          {loading ? (
-            <span>Loading...</span>
+          {loading || !selectedRoute?.id ? (
+            <Loading />
           ) : (
             <>
               <RouteDetailsWrapper>
                 <div className="image-title-container">
                   <Image
-                    src={route.images[0]}
+                    src={selectedRoute.images[0]}
                     alt=""
                     width={157}
                     height={130}
@@ -134,26 +140,26 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
 
                   <div className="title-container">
                     <div>
-                      <h2>{route.title}</h2>
-                      <span>{getUf(route.uf)}</span>
+                      <h2>{selectedRoute.title}</h2>
+                      <span>{getUf(selectedRoute.uf)}</span>
                     </div>
 
                     <div className="route-info">
-                      <Stars rating={route.rate} />
+                      <Stars rating={selectedRoute.rate} />
 
                       <div className="distance">
                         <MapPin size={24} color={'#50B2C0'} />
                         <div>
                           <p>Distância</p>
-                          <h3>{route.distance}km</h3>
+                          <h3>{formatNumber(selectedRoute.distance)}km</h3>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="route-description">{route.description}</p>
+                <p className="route-description">{selectedRoute.description}</p>
 
-                {route.images.length > 3 ? (
+                {selectedRoute.images.length > 3 ? (
                   <Slider {...settings}>
                     {route.images.map((image) => (
                       <div key={image} className="carrousel-item">
@@ -163,7 +169,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
                   </Slider>
                 ) : (
                   <div className="images-container">
-                    {route.images.map((image) => (
+                    {selectedRoute.images.map((image) => (
                       <div key={image} className="carrousel-item">
                         <Image src={image} alt="" width={125} height={125} />
                       </div>

@@ -3,7 +3,7 @@ import {
   FormContainer,
   RatingFormContainer,
 } from '@/styles/components/RouteDetailsDialog'
-import { useState, Event } from 'react'
+import { useState, FormEvent } from 'react'
 import Avatar from './Avatar'
 import Stars from './Stars'
 import rafael from '@/assets/rafael.png'
@@ -23,7 +23,7 @@ export const RatingForm = ({ onCancel, onConfirm }: RatingFormProps) => {
   const [description, setDescription] = useState('')
   const [currentRate, setCurrentRate] = useState(0)
 
-  function submitForm(event: Event) {
+  function submitForm(event: FormEvent) {
     event.preventDefault()
     const formData = {
       description,

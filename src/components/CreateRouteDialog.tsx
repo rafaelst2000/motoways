@@ -1,3 +1,4 @@
+import * as Dialog from '@radix-ui/react-dialog'
 import {
   DialogClose,
   DialogContent,
@@ -6,18 +7,18 @@ import {
   ActionsContainer,
 } from '@/styles/components/CreateRouteDialog'
 import { Check, X } from '@phosphor-icons/react'
-import * as Dialog from '@radix-ui/react-dialog'
 import { ReactNode, useState } from 'react'
 
-import rastro from '@/assets/rastro.jpg'
 import map from '@/assets/map.png'
 import Image from 'next/image'
 import Stars from './Stars'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+
 import { Input } from './Input'
 import { TextArea } from './TextArea'
+
 type CreateRouteDialogProps = {
   children: ReactNode
 }

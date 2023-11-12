@@ -1,4 +1,10 @@
-import { User } from 'next-auth'
+export interface User {
+  id: string
+  email: string
+  name: string
+  image: string
+  member_since: string
+}
 
 export interface RouteStop {
   location: [string]
