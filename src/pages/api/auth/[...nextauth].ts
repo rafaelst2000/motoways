@@ -15,6 +15,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
   callbacks: {
     async signIn({ account }) {
       if (account?.id_token) {
@@ -33,7 +34,6 @@ export const authOptions: NextAuthOptions = {
       return session
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
 }
 
 export default NextAuth(authOptions)
