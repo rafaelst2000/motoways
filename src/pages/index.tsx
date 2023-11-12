@@ -19,11 +19,6 @@ export default function Home() {
     router.push('/feed')
   }
 
-  function loginGoogle(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault()
-    signIn('google')
-  }
-
   return (
     <>
       <Head>
@@ -57,7 +52,13 @@ export default function Home() {
             </div>
             <h1>Boas vindas!</h1>
             <p>Faça seu login e encontre as melhores rotas</p>
-            <HomeButton className="margin" onClick={loginGoogle}>
+            <HomeButton
+              className="margin"
+              onClick={(e) => {
+                e.preventDefault()
+                signIn('google')
+              }}
+            >
               <Image
                 src={googleIcon}
                 alt="Google icon"
