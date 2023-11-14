@@ -34,3 +34,31 @@ export const InputContainer = styled('div', {
     },
   },
 })
+
+export const InputWrapper = styled('div', {
+  position: 'relative',
+  width: '100%',
+  ul: {
+    width: '100%',
+    position: 'absolute',
+    top: 48,
+    left: 0,
+    marginTop: 12,
+    background: '$gray-800',
+    border: '1px solid $gray-500',
+
+    li: {
+      '&:not(:first-of-type)': {
+        borderTop: '1px solid $gray-500',
+      },
+
+      padding: '12px',
+      cursor: 'pointer',
+      transition: '0.2s',
+
+      '&:hover': {
+        background: '$gray-700',
+      },
+    },
+  },
+})

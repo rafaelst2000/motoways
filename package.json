@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
+    "@react-google-maps/api": "^2.19.2",
     "@stitches/react": "^1.2.8",
+    "axios": "^1.6.1",
     "date-fns": "^2.30.0",
     "firebase": "^10.5.2",
     "next": "13.5.6",

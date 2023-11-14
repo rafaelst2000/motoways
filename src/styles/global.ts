@@ -11,6 +11,10 @@ export const globalStyles = globalCss({
     'box-sizing': 'border-box',
   },
 
+  '.pac-container': {
+    zIndex: '1100 !important',
+  },
+
   html: {
     'scroll-behavior': 'smooth',
   },
