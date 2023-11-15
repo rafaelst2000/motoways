@@ -36,6 +36,7 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 - ✨ melhorias no modo responsivo
 - ✨ permitir acessar o perfil de outro usuário
 - ✨ sugerir pontos de parada na rota, como restaurantes e postos de gasolina
+- ✨ sugerir rotas alternativas
 
 
 <!-- Badges -->
