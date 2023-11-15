@@ -97,7 +97,7 @@ export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
 
         <div className="side-content">
           <div className="section-title">
-            <h2>Destinos populares</h2>
+            <h2>Destinos populares (em breve)</h2>
             <p>
               Ver todos <CaretRight color={'#8381d9'} size={16} />
             </p>

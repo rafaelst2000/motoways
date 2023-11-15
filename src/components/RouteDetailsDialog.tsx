@@ -11,6 +11,7 @@ import {
   Heart,
   MapPin,
   PaperPlaneTilt,
+  Timer,
   X,
 } from 'phosphor-react'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -32,6 +33,8 @@ import { useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
 import Loading from './Loading'
 import { formattedDistance } from '@/utils/format-distance'
+import { formattedTimeToMinHours } from '@/utils/date-fns'
+import { Map } from './Map'
 
 type RouteDetailsProps = {
   children: ReactNode
@@ -86,6 +89,9 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   const [showForm, setShowForm] = useState(false)
   const [loading, setIsLoading] = useState(false)
   const [selectedRoute, setSelectedRoute] = useState<Route>({} as Route)
+  const [directionsResponse, setDirectionsResponse] =
+    useState<google.maps.DirectionsResult>({} as google.maps.DirectionsResult)
+
   const session = useSession()
   const user = session?.data?.user as User
 
@@ -110,8 +116,44 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
     if (isOpen) {
       setIsLoading(true)
       const routeDetails = await getRouteDetails(route)
-      setSelectedRoute(routeDetails)
+      await calculateRoute(routeDetails)
       setIsLoading(false)
+      setSelectedRoute(routeDetails)
+    }
+  }
+
+  async function calculateRoute(routeDetails: Route) {
+    const selectedLocationsSize = routeDetails.route_stops
+      .map((item) => item.place_id)
+      .filter((item) => item).length
+
+    if (selectedLocationsSize >= 2) {
+      let waypoints = []
+
+      waypoints = routeDetails.route_stops
+        .filter(
+          (item) =>
+            item.index !== 0 &&
+            item.index !== routeDetails.route_stops.length - 1 &&
+            item.place_id,
+        )
+        .map((item) => {
+          return {
+            location: item.location,
+            stopover: true,
+          }
+        })
+
+      const directionsService = new google.maps.DirectionsService()
+      const results = await directionsService.route({
+        travelMode: google.maps.TravelMode.DRIVING,
+        origin: routeDetails.route_stops[0].location,
+        destination:
+          routeDetails.route_stops[routeDetails.route_stops.length - 1]
+            .location,
+        ...(waypoints.length > 0 && { waypoints }),
+      })
+      setDirectionsResponse(results)
     }
   }
 
@@ -147,14 +189,6 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
 
                     <div className="route-info">
                       <Stars rating={selectedRoute.rate} />
-
-                      <div className="distance">
-                        <MapPin size={24} color={'#50B2C0'} />
-                        <div>
-                          <p>Distância</p>
-                          <h3>{formattedDistance(route.distance)}</h3>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -179,7 +213,26 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
                 )}
 
                 <div className="map-container">
-                  <Image src={map} alt="" width={503} height={220} />
+                  <h2>Vizualização</h2>
+                  <Map directions={directionsResponse} />
+                </div>
+
+                <div className="route-info-container">
+                  <div className="route-info-details">
+                    <MapPin size={24} color={'#50B2C0'} />
+                    <div>
+                      <p>Distância</p>
+                      <h3>{formattedDistance(route.distance)}</h3>
+                    </div>
+                  </div>
+
+                  <div className="route-info-details">
+                    <Timer size={24} color={'#50B2C0'} />
+                    <div>
+                      <p>Tempo estimado</p>
+                      <h3>{formattedTimeToMinHours(route.duration)}</h3>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="actions-container">

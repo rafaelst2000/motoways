@@ -7,9 +7,14 @@ export interface User {
 }
 
 export interface RouteStop {
-  location: [string]
+  index: number
+  location: {
+    lat: number
+    lng: number
+  }
   name: string
   route_id: string
+  place_id: string
 }
 
 export interface RouteComment {
@@ -53,6 +58,7 @@ export interface Route {
   id: string
   description: string
   distance: number
+  duration: number
   publish_at: string
   rate: number
   title: string
@@ -60,6 +66,6 @@ export interface Route {
   images: [string]
   uf: Uf
   user?: User
-  route_stops?: RouteStop[]
+  route_stops: RouteStop[]
   comments?: RouteComment[]
 }

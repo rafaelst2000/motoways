@@ -125,8 +125,20 @@ export const getRouteDetails = async (route) => {
     })
 
     const resolvedComments = await Promise.all(promises)
+    const routeStops = []
+    const routeStopsQuery = query(
+      collection(firestore, 'route_stops'),
+      where('route_id', '==', route.id),
+      orderBy('index', 'asc'),
+    )
+    const routeStopsQuerySnapshot = await getDocs(routeStopsQuery)
+    routeStopsQuerySnapshot.forEach((doc) => {
+      routeStops.push(doc.data())
+    })
+
     return {
       ...route,
+      route_stops: routeStops,
       comments: resolvedComments,
     }
   } catch (error) {

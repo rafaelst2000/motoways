@@ -17,13 +17,18 @@ export const Map = ({ directions }: MapProps) => {
     mapTypeControl: false,
     fullscreenControl: true,
   }
+  const center = {
+    lat: -30.1084702,
+    lng: -51.3419492,
+  }
 
   return (
     <>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={14}
+        zoom={8}
         options={options}
+        center={center}
       >
         {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>

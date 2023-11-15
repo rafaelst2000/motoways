@@ -77,25 +77,6 @@ export const RouteDetailsWrapper = styled('div', {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-
-        '.distance': {
-          display: 'flex',
-          alignItems: 'center',
-          gap: 16,
-
-          p: {
-            fontSize: '0.875rem',
-            color: '$gray-300',
-            lineHeight: '160%',
-            fontWeight: '400',
-          },
-          h3: {
-            fontSize: '1rem',
-            color: '$gray-200',
-            lineHeight: '140%',
-            fontWeight: '700',
-          },
-        },
       },
     },
 
@@ -106,11 +87,38 @@ export const RouteDetailsWrapper = styled('div', {
     },
   },
 
-  '.map-container': {
-    marginTop: '1.5rem',
+  '.route-info-container': {
+    margin: '12px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    '.route-info-details': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
 
-    img: {
-      borderRadius: 8,
+      p: {
+        fontSize: '0.875rem',
+        color: '$gray-300',
+        lineHeight: '160%',
+        fontWeight: '400',
+      },
+      h3: {
+        fontSize: '1rem',
+        color: '$gray-200',
+        lineHeight: '140%',
+        fontWeight: '700',
+      },
+    },
+  },
+
+  '.map-container': {
+    h2: {
+      marginTop: '1.125rem',
+      color: '$gray-100',
+      fontSize: '1rem',
+      lineHeight: '140%',
+      marginBottom: '0.5rem',
     },
   },
 
@@ -132,7 +140,8 @@ export const RouteDetailsWrapper = styled('div', {
     marginTop: '20px',
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-evenly',
+    gap: 12,
+    flexWrap: 'wrap',
   },
 
   '.actions-container': {
