@@ -55,6 +55,37 @@ export const CreateRouteDialogWrapper = styled('div', {
     lineHeight: '140%',
     marginBottom: '0.5rem',
   },
+
+  '.input-stop': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+  },
+
+  '.route-info': {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 12,
+    '.route-info-item': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+
+      p: {
+        fontSize: '0.875rem',
+        color: '$gray-300',
+        lineHeight: '160%',
+        fontWeight: '400',
+      },
+      h3: {
+        fontSize: '1rem',
+        color: '$gray-200',
+        lineHeight: '140%',
+        fontWeight: '700',
+      },
+    },
+  },
 })
 
 export const ActionsContainer = styled('div', {

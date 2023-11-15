@@ -142,3 +142,19 @@ export const addRouteComment = async (comment) => {
     console.log(err)
   }
 }
+
+export const createNewRoute = async (route, routeStops) => {
+  try {
+    const promises = []
+    await addDoc(collection(firestore, 'routes'), { ...route })
+    routeStops.forEach((routeStop) => {
+      const routePromise = addDoc(collection(firestore, 'route_stops'), {
+        ...routeStop,
+      })
+      promises.push(routePromise)
+    })
+    await Promise.all(promises)
+  } catch (err) {
+    console.log(err)
+  }
+}

@@ -44,8 +44,10 @@ export const InputWrapper = styled('div', {
     top: 48,
     left: 0,
     marginTop: 12,
-    background: '$gray-800',
+    background: '$gray-700',
     border: '1px solid $gray-500',
+    borderRadius: 4,
+    zIndex: 9999,
 
     li: {
       '&:not(:first-of-type)': {
@@ -57,7 +59,7 @@ export const InputWrapper = styled('div', {
       transition: '0.2s',
 
       '&:hover': {
-        background: '$gray-700',
+        background: '$gray-600',
       },
     },
   },

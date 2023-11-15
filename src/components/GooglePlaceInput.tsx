@@ -1,62 +1,94 @@
 import { InputContainer, InputWrapper } from '@/styles/components/Input'
 import { CSS } from '@stitches/react'
-import {
-  InputHTMLAttributes,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  icon?: ReactNode
-  css?: CSS
-  onLocationSelected?: (place: any) => void
-}
+import { InputHTMLAttributes, ReactNode, useEffect, useState } from 'react'
 
 interface Place {
   description: string
   place_id: string
 }
 
-export const GooglePlaceInput = ({ icon, css, ...props }: InputProps) => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
+type Location = {
+  lat: number
+  lng: number
+}
+export interface PlaceDetails {
+  id: string
+  index?: number
+  place_id: string
+  name: string
+  formatted_address: string
+  geometry: {
+    location: Location
+  }
+}
+
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  icon?: ReactNode
+  css?: CSS
+  onLocationSelected: (place: PlaceDetails) => void
+}
+
+export const GooglePlaceInput = ({
+  icon,
+  css,
+  onLocationSelected,
+  ...props
+}: InputProps) => {
   const [inputValue, setInputValue] = useState('')
+  const [selectedPlace, setSelectedPlace] = useState<PlaceDetails>(
+    {} as PlaceDetails,
+  )
   const [suggestions, setSuggestions] = useState<Place[]>([])
+  const [debouncedInputValue, setDebouncedInputValue] = useState<string>('')
+  const [allowReq, setAllowReq] = useState(true)
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedInputValue(inputValue?.trim())
+    }, 300)
+
+    return () => {
+      clearTimeout(timerId)
+    }
+  }, [inputValue])
 
   useEffect(() => {
     fetchSuggestions()
-  }, [inputValue])
+  }, [debouncedInputValue])
 
   async function fetchSuggestions() {
-    if (inputValue.trim() === '') {
-      setSuggestions([])
-      return
-    }
+    if (!allowReq) return
+    try {
+      const response = await fetch(`/api/places?input=${debouncedInputValue}`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch place details')
+      }
+      const data = await response.json()
 
-    const response = await fetch(`/api/places?input=${inputValue.trim()}`)
-    if (!response.ok) {
-      throw new Error('Failed to fetch place details')
-    }
-    const data = await response.json()
-
-    if (data.predictions) {
-      setSuggestions(data.predictions as Place[])
-    } else {
-      setSuggestions([])
+      if (data.predictions) {
+        setSuggestions(data.predictions as Place[])
+      } else {
+        setSuggestions([])
+      }
+    } catch (error) {
+      console.error('Error fetching place suggestions:', error)
     }
   }
 
-  function handleLocationSelect(place: Place) {
-    /*  try {
-      const details = await fetchPlaceDetails(selectedPlace.place_id)
-      setInputValue(details.address)
+  async function handleLocationSelect(place: Place) {
+    try {
+      const response = await fetch(
+        `/api/place?placeId=${place.place_id.trim()}`,
+      )
+      const { result } = await response.json()
+      setAllowReq(false)
+      setSelectedPlace(result)
+      setInputValue(result.formatted_address)
+      onLocationSelected(result)
       setSuggestions([])
-      onLocationSelect(details)
     } catch (error) {
       console.error('Error fetching place details:', error)
-      setError('Failed to fetch place details. Please try again later.')
-    } */
+    }
   }
 
   return (
@@ -65,9 +97,13 @@ export const GooglePlaceInput = ({ icon, css, ...props }: InputProps) => {
         <input
           {...props}
           onChange={({ target }) => setInputValue(target.value)}
+          onInput={() => {
+            setAllowReq(true)
+            setSelectedPlace({} as PlaceDetails)
+          }}
           value={inputValue}
         />
-        {/* {icon} */}
+        {icon}
       </InputContainer>
 
       {suggestions.length > 0 && (
