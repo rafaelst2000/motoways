@@ -5,7 +5,7 @@ import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
 import { Route } from '@/@types'
 import { formattedRelativeDate } from '@/utils/date-fns'
-import { formatNumber } from '@/utils/format-number'
+import { formattedDistance } from '@/utils/format-distance'
 
 interface PostCardProps {
   route: Route
@@ -30,7 +30,7 @@ export default function PostCard({ route }: PostCardProps) {
 
           <div>
             <h4>{route.title}</h4>
-            <span>{formatNumber(route.distance)}km</span>
+            <span>{formattedDistance(route.distance)}</span>
             <p>{route.description}</p>
           </div>
         </div>

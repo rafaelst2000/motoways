@@ -1,11 +1,10 @@
 import { PostCardMyContainer } from '@/styles/components/PostCardMy'
 import Image from 'next/image'
-import rastro from '@/assets/rastro.jpg'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
 import { Route } from '@/@types'
 import { formattedRelativeDate } from '@/utils/date-fns'
-import { formatNumber } from '@/utils/format-number'
+import { formattedDistance } from '@/utils/format-distance'
 interface PostCardMyProps {
   route: Route
 }
@@ -15,7 +14,7 @@ export default function PostCardMy({ route }: PostCardMyProps) {
     <RouteDetailsDialog route={route}>
       <PostCardMyContainer>
         <div className="card-content">
-          <Image width={108} height={152} alt="" src={rastro} />
+          <Image width={108} height={152} alt="" src={route.images[0]} />
 
           <div>
             <div className="card-info">
@@ -23,7 +22,7 @@ export default function PostCardMy({ route }: PostCardMyProps) {
               <Stars size="md" rating={route.rate} />
             </div>
             <h4>{route.title}</h4>
-            <span>{formatNumber(route.distance)}km</span>
+            <span>{formattedDistance(route.distance)}</span>
             <p>{route.description}</p>
           </div>
         </div>

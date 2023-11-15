@@ -8,6 +8,7 @@ import {
   AddContainer,
 } from '@/styles/components/CreateRouteDialog'
 import {
+  Camera,
   Check,
   Flag,
   FlagCheckered,
@@ -17,8 +18,8 @@ import {
   Trash,
   X,
 } from 'phosphor-react'
-import { ReactNode, useEffect, useState } from 'react'
-
+import { ReactNode, useEffect, useState, ChangeEvent } from 'react'
+import Image from 'next/image'
 import Stars from './Stars'
 
 import 'slick-carousel/slick/slick.css'
@@ -51,9 +52,12 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
     { id: uuidv4(), index: 0 } as PlaceDetails,
     { id: uuidv4(), index: 999 } as PlaceDetails,
   ])
-  // eslint-disable-next-line
-  const [directionsResponse, setDirectionsResponse] = useState<any>(null)
+
+  const [directionsResponse, setDirectionsResponse] =
+    useState<google.maps.DirectionsResult>({} as google.maps.DirectionsResult)
   const [loading, setLoading] = useState(false)
+  const [files, setFiles] = useState<FileList>()
+  const [previewUrls, setPreviewUrls] = useState<string[]>([])
 
   function addInput() {
     const newLocations = [...locations]
@@ -111,7 +115,7 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
         place_id: item.place_id,
       }
     })
-    await createNewRoute(route, routeStops)
+    await createNewRoute(route, routeStops, files)
     setLoading(false)
   }
 
@@ -125,10 +129,10 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
 
   useEffect(() => {
     calculateRoute()
+    // eslint-disable-next-line
   }, [locations])
 
   async function calculateRoute() {
-    /*     setDirectionsResponse({ routes: [] }) */
     const selectedLocationsSize = locations
       .map((item) => item.place_id)
       .filter((item) => item).length
@@ -174,6 +178,20 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
       setDuration(duration)
     }
   }
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event && event.target.files) setFiles(event.target.files)
+  }
+
+  useEffect(() => {
+    if (files) {
+      const newFiles: string[] = []
+      Array.from(files).forEach((file) => {
+        newFiles.push(URL.createObjectURL(file))
+      })
+      if (newFiles.length > 0) setPreviewUrls(newFiles)
+    }
+  }, [files])
 
   return (
     <Dialog.Root>
@@ -258,6 +276,30 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
             />
 
             <h2>Fotos</h2>
+            <div className="imgs-container">
+              <label htmlFor="upload-img" className="input-file">
+                <Camera size={32} color={'#50B2C0'} />
+                Adicionar fotos
+              </label>
+              <input
+                id="upload-img"
+                name="files[]"
+                type="file"
+                multiple={true}
+                onChange={handleFileChange}
+              />
+              {previewUrls &&
+                previewUrls.map((preview) => (
+                  <Image
+                    key={preview}
+                    src={preview}
+                    alt=""
+                    width="130"
+                    height="130"
+                    quality={85}
+                  />
+                ))}
+            </div>
             <h2>Vizualização</h2>
             <Map directions={directionsResponse} />
             <div className="route-info">

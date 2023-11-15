@@ -1,4 +1,4 @@
-import { firestore } from './firebase'
+import { firestore, storage } from './firebase'
 import {
   collection,
   getDocs,
@@ -8,6 +8,7 @@ import {
   orderBy,
   limit,
 } from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from '@firebase/storage'
 import { getUserById } from './users'
 
 export const getUserLastRoute = async (userId = '') => {
@@ -143,8 +144,9 @@ export const addRouteComment = async (comment) => {
   }
 }
 
-export const createNewRoute = async (route, routeStops) => {
+export const createNewRoute = async (route, routeStops, files) => {
   try {
+    if (files) route.images = await handleUpload(files)
     const promises = []
     await addDoc(collection(firestore, 'routes'), { ...route })
     routeStops.forEach((routeStop) => {
@@ -156,5 +158,21 @@ export const createNewRoute = async (route, routeStops) => {
     await Promise.all(promises)
   } catch (err) {
     console.log(err)
+  }
+}
+
+const handleUpload = async (files) => {
+  if (files.length > 0) {
+    const urls = []
+    await Promise.all(
+      Array.from(files).map(async (file) => {
+        const storageRef = ref(storage, `images/${file.name}`)
+        await uploadBytes(storageRef, file)
+        const imageUrl = await getDownloadURL(storageRef)
+        urls.push(imageUrl)
+      }),
+    )
+
+    return urls
   }
 }

@@ -86,6 +86,43 @@ export const CreateRouteDialogWrapper = styled('div', {
       },
     },
   },
+
+  'input[type="file"]': {
+    display: 'none',
+  },
+  '.input-file': {
+    content: '',
+    width: 130,
+    height: 130,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    background: '$gray-800',
+    border: '1px solid $gray-500',
+    borderRadius: 4,
+
+    fontSize: 14,
+    color: '$gray-100',
+    cursor: 'pointer',
+    transition: '0.2s',
+
+    '&:hover': {
+      background: '$gray-700',
+    },
+  },
+
+  '.imgs-container': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+    flexWrap: 'wrap',
+
+    img: {
+      borderRadius: 4,
+    },
+  },
 })
 
 export const ActionsContainer = styled('div', {

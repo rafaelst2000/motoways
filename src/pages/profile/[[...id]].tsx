@@ -10,7 +10,7 @@ import { Route, User } from '@/@types'
 import { getUserRoutes } from '@/utils/routes'
 import { getUserById, getUserAdditionalInfo } from '@/utils/users'
 import Head from 'next/head'
-import { formatNumber } from '@/utils/format-number'
+import { formattedDistance } from '@/utils/format-distance'
 
 type UserAdditionalInfo = {
   publishedRoutes: number
@@ -30,8 +30,8 @@ export default function Profile({
 }: ProfileProps) {
   const userData = [
     {
-      label: "Km's rodados",
-      value: formatNumber(userAdditionalInfo.km),
+      label: 'Distância percorrida',
+      value: formattedDistance(userAdditionalInfo.km),
       icon: <MapPin size={32} color={'#50b2c0'} />,
     },
     {

@@ -1,18 +1,10 @@
-import {
-  GoogleMap,
-  LoadScript,
-  DirectionsRenderer,
-  LoadScriptProps,
-} from '@react-google-maps/api'
-import { useState } from 'react'
+import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api'
 
 interface MapProps {
-  directions?: any
+  directions: google.maps.DirectionsResult
 }
 
 export const Map = ({ directions }: MapProps) => {
-  const [libraries] = useState<LoadScriptProps['libraries']>(['places'])
-
   const mapContainerStyle = {
     width: '100%',
     height: '220px',
@@ -28,28 +20,13 @@ export const Map = ({ directions }: MapProps) => {
 
   return (
     <>
-      {window.google === undefined ? (
-        <LoadScript
-          googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''}
-          libraries={libraries}
-        >
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            zoom={14}
-            options={options}
-          >
-            {directions && <DirectionsRenderer directions={directions} />}
-          </GoogleMap>
-        </LoadScript>
-      ) : (
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={14}
-          options={options}
-        >
-          {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap>
-      )}
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={14}
+        options={options}
+      >
+        {directions && <DirectionsRenderer directions={directions} />}
+      </GoogleMap>
     </>
   )
 }

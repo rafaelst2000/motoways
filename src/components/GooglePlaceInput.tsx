@@ -35,6 +35,7 @@ export const GooglePlaceInput = ({
   ...props
 }: InputProps) => {
   const [inputValue, setInputValue] = useState('')
+  // eslint-disable-next-line
   const [selectedPlace, setSelectedPlace] = useState<PlaceDetails>(
     {} as PlaceDetails,
   )
@@ -54,6 +55,7 @@ export const GooglePlaceInput = ({
 
   useEffect(() => {
     fetchSuggestions()
+    // eslint-disable-next-line
   }, [debouncedInputValue])
 
   async function fetchSuggestions() {
@@ -108,7 +110,7 @@ export const GooglePlaceInput = ({
 
       {suggestions.length > 0 && (
         <ul>
-          {suggestions.map((place, i) => (
+          {suggestions.map((place) => (
             <li
               key={place.place_id}
               onClick={() => handleLocationSelect(place)}

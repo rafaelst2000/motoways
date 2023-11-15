@@ -31,7 +31,7 @@ import { getRouteDetails, addRouteComment } from '@/utils/routes'
 import { useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
 import Loading from './Loading'
-import { formatNumber } from '@/utils/format-number'
+import { formattedDistance } from '@/utils/format-distance'
 
 type RouteDetailsProps = {
   children: ReactNode
@@ -152,7 +152,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
                         <MapPin size={24} color={'#50B2C0'} />
                         <div>
                           <p>Distância</p>
-                          <h3>{formatNumber(selectedRoute.distance)}km</h3>
+                          <h3>{formattedDistance(route.distance)}</h3>
                         </div>
                       </div>
                     </div>
