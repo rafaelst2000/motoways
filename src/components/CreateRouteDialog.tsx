@@ -260,7 +260,7 @@ export const CreateRouteDialog = ({
                     <div className="input-stop" key={item.id}>
                       <GooglePlaceInput
                         css={{ maxWidth: '100%', marginBottom: '12px' }}
-                        placeholder={`Parada ${index + 1}`}
+                        placeholder={`Parada ${index}`}
                         onLocationSelected={(location) =>
                           onAddLocation(location, item.id)
                         }
@@ -279,7 +279,7 @@ export const CreateRouteDialog = ({
                   ),
               )}
 
-            {locations.length < 9 && (
+            {locations.length < 10 && (
               <AddContainer>
                 <button type="submit" disabled={false} onClick={addInput}>
                   <Plus color="#50b2c0" />
