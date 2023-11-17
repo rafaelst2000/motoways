@@ -31,13 +31,12 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 ```
 
 ## **🐛 ✨ Correções de bugs e melhorias futuras**
-- 🐛 mudar o destino de um roteiro faz o mapa criar uma rota fanstasma
-- ✨ permitir remover uma imagem ao fazer upload dela
+- 🐛 mudar o destino de um roteiro faz o mapa eventualmente crashar
 - ✨ melhorias no modo responsivo
+- ✨ permitir remover uma imagem ao fazer upload dela
 - ✨ permitir acessar o perfil de outro usuário
 - ✨ sugerir pontos de parada na rota, como restaurantes e postos de gasolina
 - ✨ sugerir rotas alternativas
-
 
 <!-- Badges -->
 
