@@ -35,6 +35,7 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 - ✨ melhorias no modo responsivo
 - ✨ implementar login com o Facebook
 - ✨ implementar "Favoritar"
+- ✨ implementar "Destinos populares"
 - ✨ ao clicar numa imagem do carrousel, abrir full screen
 - ✨ permitir remover uma imagem ao fazer upload dela
 - ✨ permitir acessar o perfil de outro usuário
