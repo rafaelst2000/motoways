@@ -82,8 +82,13 @@ export const HomeButton = styled('button', {
   borderRadius: '8px',
   transition: '0.2s all',
 
-  '&:hover': {
+  '&:not(:disabled):hover': {
     transform: 'scale(1.03)',
     background: '$gray-700',
+  },
+
+  '&:disabled': {
+    cursor: 'not-allowed',
+    opacity: '0.6',
   },
 })

@@ -167,8 +167,13 @@ export const RouteDetailsWrapper = styled('div', {
       cursor: 'pointer',
       gap: 12,
 
-      '&:hover': {
+      '&:not(:disabled):hover': {
         backgroundColor: '$gray-500',
+      },
+
+      '&:disabled': {
+        opacity: 0.6,
+        cursor: 'not-allowed',
       },
     },
   },

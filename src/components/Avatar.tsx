@@ -8,8 +8,8 @@ export interface AvatarProps {
 
 export default function Avatar({ variant, url }: AvatarProps) {
   const sizes = {
-    xs: 29,
-    sm: 39,
+    xs: 30,
+    sm: 38,
     lg: 68,
   }
   const size = sizes[variant]
