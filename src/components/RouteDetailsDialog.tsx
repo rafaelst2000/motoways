@@ -160,7 +160,6 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
     if (directionsResponse && directionsResponse.routes.length > 0) {
       // eslint-disable-next-line
       const directions = directionsResponse as any
-      console.log(directions, directions)
 
       const startLocation = `${directions.request.origin.location.lat()},${directions.request.origin.location.lng()}`
       const endLocation = `${directions.request.destination.location.lat()},${directions.request.destination.location.lng()}`
