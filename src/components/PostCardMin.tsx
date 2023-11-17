@@ -1,6 +1,5 @@
 import { PostCardMinContainer } from '@/styles/components/PostCardMin'
 import Image from 'next/image'
-import rastro from '@/assets/rastro.jpg'
 import Stars from './Stars'
 import { RouteDetailsDialog } from './RouteDetailsDialog'
 import { getUf } from '@/utils/ufs'
@@ -20,7 +19,9 @@ export default function PostCardMin({
     <>
       {showDetails ? (
         <RouteDetailsDialog route={route}>
-          <CardContent route={route} {...props} />
+          <div {...props}>
+            <CardContent route={route} />
+          </div>
         </RouteDetailsDialog>
       ) : (
         <CardContent route={route} />
@@ -36,7 +37,7 @@ function CardContent({ route, ...props }: CardContentProps) {
   return (
     <PostCardMinContainer {...props}>
       <div className="card-content">
-        <Image width={64} height={94} alt="" src={rastro} />
+        <Image width={64} height={94} alt="" src={route.images[0]} />
 
         <div className="card-info">
           <div className="card-title">

@@ -6,11 +6,13 @@ import SideMenu from '@/components/SideMenu'
 import { FeedContainer } from '@/styles/Feed'
 import { CaretRight, ChartLineUp, PlusCircle } from 'phosphor-react'
 import { getServerSession } from 'next-auth'
+import { useSession } from 'next-auth/react'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { GetServerSideProps } from 'next'
 import { getUserLastRoute, getFeedRoutes } from '@/utils/routes'
 import Head from 'next/head'
 import { Route } from '@/@types'
+import { useEffect, useState } from 'react'
 
 interface FeedProps {
   userLastRoute: Route
@@ -60,6 +62,23 @@ const tempRoutes: Route[] = [
 ]
 
 export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
+  const session = useSession()
+  const user = session?.data?.user
+  const [lastRoute, setLastRoute] = useState<Route>({} as Route)
+  const [routes, setRoutes] = useState<Route[]>([] as Route[])
+
+  useEffect(() => {
+    setLastRoute(userLastRoute)
+    setRoutes(feedRoutes)
+  }, [userLastRoute, feedRoutes])
+
+  async function onCreateRoute() {
+    const lastRoute = (await getUserLastRoute(user?.id)) as Route
+    const lastRoutes = (await getFeedRoutes(user?.id)) as Route[]
+    setLastRoute(lastRoute)
+    setRoutes(lastRoutes)
+  }
+
   return (
     <>
       <Head>
@@ -73,7 +92,7 @@ export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
               <ChartLineUp size={32} color={'#50B2C0'} />
               <h1>Início</h1>
             </div>
-            <CreateRouteDialog>
+            <CreateRouteDialog onCreateRoute={onCreateRoute}>
               <button>
                 <PlusCircle color={'#50b2c0'} size={24} />
                 Criar roteiro
@@ -81,18 +100,17 @@ export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
             </CreateRouteDialog>
           </div>
 
-          {userLastRoute && (
+          {lastRoute && lastRoute.id && (
             <>
               <h2>Seu último passeio</h2>
-              <PostCardMy route={userLastRoute} />
+              <PostCardMy route={lastRoute} />
             </>
           )}
 
           <h2 className="recent">Avaliações mais recentes</h2>
-          {feedRoutes &&
-            feedRoutes.map((route) => (
-              <PostCard key={route.id} route={route} />
-            ))}
+          {routes &&
+            routes.length > 0 &&
+            routes.map((route) => <PostCard key={route.id} route={route} />)}
         </div>
 
         <div className="side-content">
@@ -106,7 +124,9 @@ export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
           <div className="cards">
             {tempRoutes &&
               tempRoutes.map((route) => (
-                <PostCardMin key={route.id} route={route} showDetails={false} />
+                <div key={route.id}>
+                  <PostCardMin route={route} showDetails={false} />
+                </div>
               ))}
           </div>
         </div>

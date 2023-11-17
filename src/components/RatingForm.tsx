@@ -6,7 +6,6 @@ import {
 import { useState, FormEvent } from 'react'
 import Avatar from './Avatar'
 import Stars from './Stars'
-import rafael from '@/assets/rafael.png'
 import { TextArea } from './TextArea'
 import { Check, X } from 'phosphor-react'
 import { useSession } from 'next-auth/react'

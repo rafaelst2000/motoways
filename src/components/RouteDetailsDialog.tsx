@@ -185,6 +185,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
                     <div>
                       <h2>{selectedRoute.title}</h2>
                       <span>{getUf(selectedRoute.uf)}</span>
+                      <p>Por: {route.user?.name || user.name}</p>
                     </div>
 
                     <div className="route-info">

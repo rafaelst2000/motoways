@@ -35,7 +35,6 @@ export const getUserLastRoute = async (userId = '') => {
 
 export const getFilteredRoutes = async (uf = '') => {
   try {
-    const routes = []
     const q = uf
       ? query(
           collection(firestore, 'routes'),
@@ -44,11 +43,19 @@ export const getFilteredRoutes = async (uf = '') => {
         )
       : query(collection(firestore, 'routes'), orderBy('publish_at', 'desc'))
     const querySnapshot = await getDocs(q)
+    const promises = []
     querySnapshot.forEach((doc) => {
-      routes.push(doc.data())
+      const userPromise = getUserById(doc.data().user_id).then((user) => ({
+        ...doc.data(),
+        user,
+      }))
+
+      promises.push(userPromise)
     })
 
-    return routes.length > 0 ? routes : null
+    const resolvedRoutes = await Promise.all(promises)
+
+    return resolvedRoutes.length > 0 ? resolvedRoutes : null
   } catch (error) {
     console.error('Erro ao buscar rotas:', error)
     return null

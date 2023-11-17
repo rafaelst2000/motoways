@@ -34,15 +34,20 @@ import { useSession } from 'next-auth/react'
 import { createNewRoute } from '@/utils/routes'
 import { formattedDistance } from '@/utils/format-distance'
 import { formattedTimeToMinHours } from '@/utils/date-fns'
+import { existsUf } from '@/utils/ufs'
 
 type CreateRouteDialogProps = {
   children: ReactNode
+  onCreateRoute: () => void
 }
 
-export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
+export const CreateRouteDialog = ({
+  children,
+  onCreateRoute,
+}: CreateRouteDialogProps) => {
   const session = useSession()
   const user = session?.data?.user
-
+  const [open, setOpen] = useState(false)
   const [currentRate, setCurrentRate] = useState(0)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -52,6 +57,7 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
     { id: uuidv4(), index: 0 } as PlaceDetails,
     { id: uuidv4(), index: 999 } as PlaceDetails,
   ])
+  const [uf, setUf] = useState('')
 
   const [directionsResponse, setDirectionsResponse] =
     useState<google.maps.DirectionsResult>({} as google.maps.DirectionsResult)
@@ -102,7 +108,7 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
       images: [],
       publish_at: new Date().toISOString(),
       rate: currentRate,
-      uf: 'rs',
+      uf,
       user_id: user?.id,
       duration,
     }
@@ -116,7 +122,9 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
       }
     })
     await createNewRoute(route, routeStops, files)
-    setLoading(false)
+    clearDialog()
+    await onCreateRoute()
+    setOpen(false)
   }
 
   const disableButton =
@@ -125,6 +133,7 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
     !currentRate ||
     !description ||
     !locations[0].place_id ||
+    !previewUrls.length ||
     !locations[locations.length - 1].place_id
 
   useEffect(() => {
@@ -143,6 +152,11 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
       locations[locations.length - 1].place_id
     ) {
       let waypoints = []
+
+      locations[locations.length - 1].address_components.forEach((item) => {
+        if (existsUf(item.short_name.toLowerCase()))
+          setUf(item.short_name.toLowerCase())
+      })
 
       waypoints = locations
         .filter(
@@ -183,6 +197,22 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
     if (event && event.target.files) setFiles(event.target.files)
   }
 
+  function clearDialog() {
+    setCurrentRate(0)
+    setTitle('')
+    setDescription('')
+    setDistance(0)
+    setDuration(0)
+    setLocations([
+      { id: uuidv4(), index: 0 } as PlaceDetails,
+      { id: uuidv4(), index: 999 } as PlaceDetails,
+    ])
+    setDirectionsResponse({} as google.maps.DirectionsResult)
+    setLoading(false)
+    setFiles(undefined)
+    setPreviewUrls([])
+  }
+
   useEffect(() => {
     if (files) {
       const newFiles: string[] = []
@@ -194,13 +224,15 @@ export const CreateRouteDialog = ({ children }: CreateRouteDialogProps) => {
   }, [files])
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+    <Dialog.Root open={open} onOpenChange={clearDialog}>
+      <Dialog.Trigger onClick={() => setOpen(true)} asChild>
+        {children}
+      </Dialog.Trigger>
 
       <Dialog.Portal>
         <DialogOverlay />
         <DialogContent>
-          <DialogClose>
+          <DialogClose onClick={() => setOpen(false)}>
             <X size={24} />
           </DialogClose>
 

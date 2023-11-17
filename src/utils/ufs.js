@@ -29,3 +29,35 @@ export const ufs = {
 }
 
 export const getUf = (uf) => ufs[uf.toLowerCase()] || ''
+export const existsUf = (uf) => {
+  const ufs = [
+    'ac',
+    'al',
+    'am',
+    'ap',
+    'ba',
+    'ce',
+    'df',
+    'es',
+    'go',
+    'ma',
+    'mg',
+    'ms',
+    'mt',
+    'pa',
+    'pb',
+    'pe',
+    'pi',
+    'pr',
+    'rj',
+    'rn',
+    'ro',
+    'rr',
+    'rs',
+    'sc',
+    'se',
+    'sp',
+    'to',
+  ]
+  return ufs.includes(uf.toLowerCase())
+}

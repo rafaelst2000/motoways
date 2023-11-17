@@ -71,6 +71,7 @@ export const RouteDetailsWrapper = styled('div', {
         color: '$gray-300',
         lineHeight: '160%',
         fontWeight: '400',
+        fontStyle: 'italic',
       },
 
       '.route-info': {

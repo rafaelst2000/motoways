@@ -54,6 +54,7 @@ export type Uf =
   | 'sp'
   | 'se'
   | 'to'
+  | ''
 export interface Route {
   id: string
   description: string

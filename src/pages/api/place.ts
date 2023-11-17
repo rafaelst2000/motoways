@@ -17,8 +17,6 @@ export default async function handler(
       throw new Error('Missing placeId parameter')
     }
 
-    console.log('Request', placeId)
-
     const response = await axios.get(
       'https://maps.googleapis.com/maps/api/place/details/json',
       {

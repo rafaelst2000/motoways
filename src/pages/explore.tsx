@@ -12,12 +12,18 @@ import Loading from '@/components/Loading'
 import Head from 'next/head'
 import PostCardMin from '@/components/PostCardMin'
 import SideMenu from '@/components/SideMenu'
+import { getUf } from '@/utils/ufs'
 
+type UfItem = {
+  value: string
+  label: string
+}
 interface ExploreProps {
   routes: Route[]
+  tags: UfItem[]
 }
 
-export default function Explore({ routes }: ExploreProps) {
+export default function Explore({ routes, tags }: ExploreProps) {
   const [search, setSearch] = useState('')
   const [selectedTag, setSelectedTag] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -31,25 +37,6 @@ export default function Explore({ routes }: ExploreProps) {
   useEffect(() => {
     setFilteredRoutes(routes)
   }, [routes])
-
-  const tags = [
-    {
-      label: 'Tudo',
-      value: '',
-    },
-    {
-      label: 'Rio Grande do Sul',
-      value: 'rs',
-    },
-    {
-      label: 'Santa Catarina',
-      value: 'sc',
-    },
-    {
-      label: 'Paraná',
-      value: 'pr',
-    },
-  ]
 
   async function filterRoutesByUf(uf: string) {
     if (uf === selectedTag) return
@@ -84,15 +71,16 @@ export default function Explore({ routes }: ExploreProps) {
           </div>
 
           <TagsContainer>
-            {tags.map((tag) => (
-              <Tag
-                active={tag.value === selectedTag}
-                key={tag.value}
-                onClick={() => filterRoutesByUf(tag.value)}
-              >
-                {tag.label}
-              </Tag>
-            ))}
+            {tags &&
+              tags.map((tag) => (
+                <Tag
+                  active={tag.value === selectedTag}
+                  key={tag.value}
+                  onClick={() => filterRoutesByUf(tag.value)}
+                >
+                  {tag.label}
+                </Tag>
+              ))}
           </TagsContainer>
 
           {isLoading ? (
@@ -126,10 +114,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   const routes = (await getFilteredRoutes()) as Route[]
+  const allUfsFromRoutes = routes.map((route) => route.uf)
+  const uniqueUfsSet = new Set(allUfsFromRoutes)
+  const uniqueUfsArray = Array.from(uniqueUfsSet)
+  const tags = uniqueUfsArray
+    .map((tag) => ({ value: tag, label: getUf(tag) }))
+    .sort((a, b) => a.label.localeCompare(b.label))
+  tags.unshift({ value: '', label: 'Tudo' })
   return {
     props: {
       session,
       routes,
+      tags,
     },
   }
 }

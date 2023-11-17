@@ -11,6 +11,10 @@ type Location = {
   lat: number
   lng: number
 }
+
+type AddressComponents = {
+  short_name: string
+}
 export interface PlaceDetails {
   id: string
   index?: number
@@ -20,6 +24,7 @@ export interface PlaceDetails {
   geometry: {
     location: Location
   }
+  address_components: [AddressComponents]
 }
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -68,7 +73,15 @@ export const GooglePlaceInput = ({
       const data = await response.json()
 
       if (data.predictions) {
-        setSuggestions(data.predictions as Place[])
+        // eslint-disable-next-line
+        const filteredPredictions = data.predictions.filter((prediction: any) => {
+            return prediction.terms.some(
+              // eslint-disable-next-line
+            (term: any) => term.value.toLowerCase() === 'brazil',
+            )
+          },
+        )
+        setSuggestions(filteredPredictions as Place[])
       } else {
         setSuggestions([])
       }

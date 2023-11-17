@@ -1,10 +1,13 @@
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api'
-
+import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 interface MapProps {
   directions: google.maps.DirectionsResult
 }
 
 export const Map = ({ directions }: MapProps) => {
+  const [id, setId] = useState('')
+
   const mapContainerStyle = {
     width: '100%',
     height: '220px',
@@ -22,6 +25,11 @@ export const Map = ({ directions }: MapProps) => {
     lng: -51.3419492,
   }
 
+  useEffect(() => {
+    const newId = uuidv4()
+    setId(newId)
+  }, [directions])
+
   return (
     <>
       <GoogleMap
@@ -30,7 +38,11 @@ export const Map = ({ directions }: MapProps) => {
         options={options}
         center={center}
       >
-        {directions && <DirectionsRenderer directions={directions} />}
+        {directions &&
+          Array.isArray(directions.routes) &&
+          directions.routes.length > 0 && (
+            <DirectionsRenderer directions={directions} key={id} />
+          )}
       </GoogleMap>
     </>
   )
