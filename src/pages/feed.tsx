@@ -32,6 +32,8 @@ const tempRoutes: Route[] = [
     uf: 'sc',
     user_id: 'd4a7102a-6afb-4429-bb0f-c2e5b03eff0a',
     title: 'Teste',
+    duration: 1000,
+    route_stops: [],
   },
   {
     description: 'teste 2 ',
@@ -45,6 +47,8 @@ const tempRoutes: Route[] = [
     uf: 'sc',
     user_id: 'd4a7102a-6afb-4429-bb0f-c2e5b03eff0a',
     title: 'Teste 2',
+    duration: 1000,
+    route_stops: [],
   },
   {
     description: 'teste 3 ',
@@ -58,6 +62,8 @@ const tempRoutes: Route[] = [
     uf: 'sc',
     user_id: 'd4a7102a-6afb-4429-bb0f-c2e5b03eff0a',
     title: 'Teste 3',
+    duration: 1000,
+    route_stops: [],
   },
 ]
 

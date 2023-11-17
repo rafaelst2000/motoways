@@ -17,7 +17,6 @@ import {
 import * as Dialog from '@radix-ui/react-dialog'
 import { CSSProperties, ReactNode, useState } from 'react'
 
-import map from '@/assets/map.png'
 import Image from 'next/image'
 import Stars from './Stars'
 
