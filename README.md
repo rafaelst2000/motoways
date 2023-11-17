@@ -33,6 +33,7 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 ## **🐛 ✨ Correções de bugs e melhorias futuras**
 - 🐛 mudar o destino de um roteiro faz o mapa eventualmente crashar
 - ✨ melhorias no modo responsivo
+- ✨ implementar login com o Facebook
 - ✨ permitir remover uma imagem ao fazer upload dela
 - ✨ permitir acessar o perfil de outro usuário
 - ✨ sugerir pontos de parada na rota, como restaurantes e postos de gasolina
