@@ -172,7 +172,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
         )
         .join('|')
       const travelMode = directions.request.travelMode.toLowerCase()
-      const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${startLocation}&destination=${endLocation}&waypoints=${waypoints}&travelmode=${travelMode}&dir_action=navigate`
+      const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${startLocation}&destination=${endLocation}&waypoints=${waypoints}&travelmode=${travelMode}&dirflg=d`
       window.open(mapsUrl, '_blank')
     }
   }
