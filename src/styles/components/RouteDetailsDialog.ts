@@ -318,3 +318,35 @@ export const FormContainer = styled('form', {
   gap: 12,
   marginTop: 24,
 })
+
+export const ActionsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  gap: 8,
+
+  button: {
+    width: 40,
+    height: 40,
+    borderRadius: 4,
+    background: '$gray-600',
+    transition: '0.2s',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    svg: {
+      width: 24,
+      height: 24,
+    },
+
+    '&:not(:disabled):hover': {
+      background: '$gray-500',
+    },
+    '&:disabled': {
+      cursor: 'not-allowed',
+      opacity: '0.6',
+    },
+  },
+})
