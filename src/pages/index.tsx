@@ -4,21 +4,13 @@ import Image from 'next/image'
 
 import homeImage from '@/assets/Image.png'
 import googleIcon from '@/assets/GoogleIcon.svg'
-import facebookIcon from '@/assets/FacebookIcon.svg'
 import logo from '@/assets/Logo.png'
-import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 
 export default function Home() {
-  const router = useRouter()
-
-  function goToFeed() {
-    router.push('/feed')
-  }
-
   return (
     <>
       <Head>
