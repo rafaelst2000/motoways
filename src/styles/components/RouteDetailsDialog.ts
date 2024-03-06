@@ -19,6 +19,11 @@ export const DialogContent = styled(Dialog.Content, {
   display: 'flex',
   flexDirection: 'column',
   overflowY: 'auto',
+
+  '@media screen and (max-width: 1130px)': {
+    width: '100%',
+    padding: '12px 24px',
+  },
 })
 
 export const DialogClose = styled(Dialog.Close, {
@@ -177,6 +182,40 @@ export const RouteDetailsWrapper = styled('div', {
       },
     },
   },
+
+  '@media screen and (max-width: 1130px)': {
+    '.actions-container': {
+      button: {
+        justifyContent: 'center',
+      },
+    },
+  },
+
+  '@media screen and (max-width: 600px)': {
+    '.actions-container': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    padding: '16px',
+
+    '.image-title-container': {
+      gap: '0.875rem',
+
+      img: {
+        width: 100,
+        height: 100,
+      },
+    },
+
+    '.carrousel-item': {
+      padding: '0 0.25rem',
+      img: {
+        width: '100%',
+        height: 'auto',
+        'aspect-ratio': '1 / 1',
+      },
+    },
+  },
 })
 
 export const RouteCommentsWrapper = styled('div', {
@@ -278,36 +317,4 @@ export const FormContainer = styled('form', {
   flexDirection: 'column',
   gap: 12,
   marginTop: 24,
-})
-
-export const ActionsContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  gap: 8,
-
-  button: {
-    width: 40,
-    height: 40,
-    borderRadius: 4,
-    background: '$gray-600',
-    transition: '0.2s',
-    border: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    svg: {
-      width: 24,
-      height: 24,
-    },
-
-    '&:not(:disabled):hover': {
-      background: '$gray-500',
-    },
-    '&:disabled': {
-      cursor: 'not-allowed',
-      opacity: '0.6',
-    },
-  },
 })

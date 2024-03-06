@@ -21,6 +21,11 @@ export const DialogContent = styled(Dialog.Content, {
   flexDirection: 'column',
   overflowY: 'auto',
   zIndex: 1000,
+
+  '@media screen and (max-width: 1130px)': {
+    width: '100%',
+    padding: '12px 24px',
+  },
 })
 
 export const DialogClose = styled(Dialog.Close, {
@@ -40,6 +45,10 @@ export const CreateRouteDialogWrapper = styled('div', {
   background: '$gray-700',
   padding: '24px 32px',
   borderRadius: 10,
+
+  '@media screen and (max-width: 600px)': {
+    padding: '16px',
+  },
 
   h1: {
     fontSize: '1.25rem',

@@ -67,15 +67,6 @@ export default function Home() {
               />
               Entrar com Google
             </HomeButton>
-            <HomeButton disabled onClick={goToFeed}>
-              <Image
-                src={facebookIcon}
-                alt="Facebook icon"
-                width={32}
-                quality={100}
-              />
-              Entrar com Facebook
-            </HomeButton>
           </div>
         </div>
       </HomeContainer>
