@@ -1,6 +1,10 @@
 import { styled } from '@stitches/react'
 
 export const BottomContainer = styled('aside', {
+  '@media screen and (min-width: 1131px)': {
+    display: 'none',
+  },
+
   position: 'fixed',
   bottom: 0,
   left: 0,
