@@ -49,8 +49,23 @@ export const ExploreContainer = styled('main', {
 
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
+    paddingBottom: '4rem',
     '.center-content': {
       paddingTop: '0',
+    },
+  },
+
+  '@media screen and (max-width: 768px)': {
+    '.cards': {
+      display: 'grid',
+      gap: 20,
+      gridTemplateColumns: '1fr',
+    },
+
+    '.title-container': {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0 !important',
     },
   },
 })

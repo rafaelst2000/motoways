@@ -13,6 +13,7 @@ import Head from 'next/head'
 import PostCardMin from '@/components/PostCardMin'
 import SideMenu from '@/components/SideMenu'
 import { getUf } from '@/utils/ufs'
+import BottomMenu from '@/components/BottomMenu'
 
 type UfItem = {
   value: string
@@ -64,8 +65,9 @@ export default function Explore({ routes, tags }: ExploreProps) {
             <Input
               placeholder="Buscar destino"
               icon={<MagnifyingGlass size={20} />}
-              css={{ maxWidth: 433 }}
+              css={{}}
               value={search}
+              className="search-input"
               onChange={({ target }) => setSearch(target.value)}
             />
           </div>
@@ -99,6 +101,7 @@ export default function Explore({ routes, tags }: ExploreProps) {
           )}
         </div>
       </ExploreContainer>
+      <BottomMenu />
     </>
   )
 }

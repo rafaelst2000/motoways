@@ -141,6 +141,7 @@ export const FeedContainer = styled('main', {
 
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
+    paddingBottom: '4rem',
     '.center-content': {
       paddingTop: '0',
     },

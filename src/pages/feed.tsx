@@ -13,6 +13,7 @@ import { getUserLastRoute, getFeedRoutes } from '@/utils/routes'
 import Head from 'next/head'
 import { Route } from '@/@types'
 import { useEffect, useState } from 'react'
+import BottomMenu from '@/components/BottomMenu'
 
 interface FeedProps {
   userLastRoute: Route
@@ -134,6 +135,7 @@ export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
           </div>
         </div>
       </FeedContainer>
+      <BottomMenu />
     </>
   )
 }

@@ -92,18 +92,22 @@ export const ProfileContainer = styled('main', {
 
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
-
+    paddingBottom: '4rem',
     '.info-item-container': {
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
       gap: 20,
       flexWrap: 'wrap',
+      maxWidth: '210px',
 
       '.info-item': {
         marginTop: '0',
-        justifyContent: 'center',
       },
+    },
+
+    '.separator': {
+      margin: '16px auto !important',
     },
 
     '.desktop': {

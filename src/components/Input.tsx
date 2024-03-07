@@ -7,9 +7,9 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   css: CSS
 }
 
-export const Input = ({ icon, css, ...props }: InputProps) => {
+export const Input = ({ icon, css, className, ...props }: InputProps) => {
   return (
-    <InputContainer css={css}>
+    <InputContainer css={css} className={className}>
       <input {...props} />
       {icon}
     </InputContainer>

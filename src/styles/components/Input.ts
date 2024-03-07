@@ -12,6 +12,10 @@ export const InputContainer = styled('div', {
   color: '$gray-500',
   transition: '0.2s',
 
+  '&.search-input': {
+    maxWidth: 433,
+  },
+
   '&:focus-within': {
     color: '$green-200',
   },
@@ -31,6 +35,12 @@ export const InputContainer = styled('div', {
 
     '&:focus': {
       outline: 'none',
+    },
+  },
+
+  '@media screen and (max-width: 768px)': {
+    '&.search-input': {
+      maxWidth: '100%',
     },
   },
 })

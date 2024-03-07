@@ -11,6 +11,7 @@ import { getUserRoutes } from '@/utils/routes'
 import { getUserById, getUserAdditionalInfo } from '@/utils/users'
 import Head from 'next/head'
 import { formattedDistance } from '@/utils/format-distance'
+import BottomMenu from '@/components/BottomMenu'
 
 type UserAdditionalInfo = {
   publishedRoutes: number
@@ -93,6 +94,7 @@ export default function Profile({
           </div>
         </ProfileContainer>
       )}
+      <BottomMenu />
     </>
   )
 }
