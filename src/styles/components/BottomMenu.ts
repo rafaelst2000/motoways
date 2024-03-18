@@ -27,5 +27,22 @@ export const BottomContainer = styled('aside', {
       padding: '0 12px',
       cursor: 'pointer',
     },
+
+    '.selected': {
+      position: 'relative',
+
+      '&:after': {
+        content: '',
+        width: 28,
+        height: 4,
+        borderRadius: 999,
+        background:
+          'var(--gradient-vertical, linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%))',
+        position: 'absolute',
+        bottom: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
+      },
+    },
   },
 })
