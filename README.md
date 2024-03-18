@@ -31,15 +31,15 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 ```
 
 ## **🐛 ✨ Correções de bugs e melhorias futuras**
-- 🐛 mudar o destino de um roteiro faz o mapa eventualmente crashar
-- ✨ ̶m̶e̶l̶h̶o̶r̶i̶a̶s̶ ̶n̶o̶ ̶m̶o̶d̶o̶ ̶r̶e̶s̶p̶o̶n̶s̶i̶v̶o̶
-- ✨ implementar "Favoritar"
-- ✨ implementar "Destinos populares"
-- ✨ ao clicar numa imagem do carrousel, abrir full screen
-- ✨ permitir remover uma imagem ao fazer upload dela
-- ✨ permitir acessar o perfil de outro usuário
-- ✨ sugerir pontos de parada na rota, como restaurantes e postos de gasolina
-- ✨ sugerir rotas alternativas
+[ ] mudar o destino de um roteiro faz o mapa eventualmente crashar
+[X] melhorias no modo responsivo
+[ ] implementar "Favoritar"
+[ ] implementar "Destinos populares"
+[ ] ao clicar numa imagem do carrousel, abrir full screen
+[ ] permitir remover uma imagem ao fazer upload dela
+[ ] permitir acessar o perfil de outro usuário
+[ ] sugerir pontos de parada na rota, como restaurantes e postos de gasolina
+[ ] sugerir rotas alternativas
 
 <!-- Badges -->
 
