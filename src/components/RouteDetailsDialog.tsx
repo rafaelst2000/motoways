@@ -29,7 +29,7 @@ import { RatingForm } from './RatingForm'
 import { Route, User } from '@/@types'
 import { getUf } from '@/utils/ufs'
 import { getRouteDetails, addRouteComment } from '@/utils/routes'
-import { updateUserFavoriteRoutes } from '@/utils/users'
+import { updateUserFavoriteRoutes, getUserById } from '@/utils/users'
 import { useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
 import Loading from './Loading'
@@ -106,16 +106,21 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
 
   async function handleFavoriteRoute() {
     setLoadingFavoriteRoute(true)
-    if (isFavoriteRoute) {
-      const newRoutes = favoriteRoutes.filter((item) => item !== route.id)
+    try {
+      let newRoutes = []
+      if (isFavoriteRoute) {
+        newRoutes = favoriteRoutes.filter((item) => item !== route.id)
+      } else {
+        newRoutes = [...favoriteRoutes, route.id]
+      }
       setFavoriteRoutes(newRoutes)
       await updateUserFavoriteRoutes(user, newRoutes)
-    } else {
-      const newRoutes = [...favoriteRoutes, route.id]
-      setFavoriteRoutes(newRoutes)
-      await updateUserFavoriteRoutes(user, newRoutes)
+    } catch (error) {
+      console.error(error)
+      setFavoriteRoutes(favoriteRoutes)
+    } finally {
+      setLoadingFavoriteRoute(false)
     }
-    setLoadingFavoriteRoute(false)
   }
 
   async function handleConfirmComment(data: FormData) {
@@ -136,7 +141,8 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
       setIsLoading(true)
       const routeDetails = await getRouteDetails(route)
       await calculateRoute(routeDetails)
-      const userFavoriteRoutes = user.favorite_routes ?? []
+      const loggedUser = await getUserById(user.id)
+      const userFavoriteRoutes = loggedUser.favorite_routes ?? []
       setFavoriteRoutes(userFavoriteRoutes)
       setIsLoading(false)
       setSelectedRoute(routeDetails)

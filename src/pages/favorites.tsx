@@ -1,6 +1,6 @@
 import PostCardMy from '@/components/PostCardMy'
 import SideMenu from '@/components/SideMenu'
-import { ProfileContainer } from '@/styles/Profile'
+import { FavoritesContainer } from '@/styles/Favorites'
 import { Heart } from 'phosphor-react'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
@@ -21,10 +21,10 @@ export default function Favorites({ userRoutes }: FavoritesProps) {
         <title>Motoways | Favoritos</title>
       </Head>
 
-      <ProfileContainer>
+      <FavoritesContainer>
         <SideMenu />
         <div className="center-content">
-          <div className="page-title desktop">
+          <div className="page-title">
             <Heart size={32} color={'#50B2C0'} />
             <h1>Favoritos</h1>
           </div>
@@ -34,7 +34,7 @@ export default function Favorites({ userRoutes }: FavoritesProps) {
               <PostCardMy key={route.id} route={route} />
             ))}
         </div>
-      </ProfileContainer>
+      </FavoritesContainer>
 
       <BottomMenu />
     </>
