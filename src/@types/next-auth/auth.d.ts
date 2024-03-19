@@ -7,6 +7,7 @@ declare module 'next-auth' {
     name: string
     image: string
     member_since: string
+    favorite_routes: string[]
   }
 
   interface Session {

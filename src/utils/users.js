@@ -1,5 +1,13 @@
 import { firestore } from './firebase'
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  addDoc,
+  query,
+  where,
+  doc,
+  updateDoc,
+} from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 
 export const getUsers = async () => {
@@ -83,4 +91,15 @@ export const createUserIfNotExists = async (user) => {
       console.log(err)
     }
   }
+}
+
+export const updateUserFavoriteRoutes = async (user, favoriteRoutes) => {
+  if (!user && !user.email) return
+  const usersCollectionRef = collection(firestore, 'users')
+  const q = query(usersCollectionRef, where('email', '==', user.email))
+  const querySnapshot = await getDocs(q)
+  const id = querySnapshot.docs[0].id
+  await updateDoc(doc(firestore, 'users', id), {
+    favorite_routes: favoriteRoutes,
+  })
 }

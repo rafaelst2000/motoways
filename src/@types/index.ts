@@ -4,6 +4,7 @@ export interface User {
   name: string
   image: string
   member_since: string
+  favorite_routes: string[]
 }
 
 export interface RouteStop {

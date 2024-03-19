@@ -1,5 +1,5 @@
 import { SideMenuContainer } from '@/styles/components/SideMenu'
-import { ChartLineUp, User, Binoculars, SignOut } from 'phosphor-react'
+import { ChartLineUp, User, Binoculars, SignOut, Heart } from 'phosphor-react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
@@ -61,6 +61,16 @@ export default function SideMenu() {
             }
           />
           Perfil
+        </li>
+        <li
+          className={router.pathname === '/favorites' ? 'selected' : ''}
+          onClick={() => goToPage('favorites')}
+        >
+          <Heart
+            size={24}
+            color={router.pathname === '/favorites' ? '#F8F9FC' : '#8d95af'}
+          />
+          Favoritos
         </li>
       </ul>
 

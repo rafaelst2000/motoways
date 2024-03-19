@@ -195,3 +195,29 @@ const handleUpload = async (files) => {
     return urls
   }
 }
+
+export const getUserFavoriteRoutes = async (userId = '') => {
+  if (!userId) return []
+  try {
+    const user = await getUserById(userId)
+    const userRoutesIds = user.favorite_routes ?? []
+    if (userRoutesIds.length === 0) return []
+
+    const routes = []
+    const q = query(
+      collection(firestore, 'routes'),
+      where('id', 'in', userRoutesIds),
+      orderBy('publish_at', 'desc'),
+    )
+
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      routes.push(doc.data())
+    })
+
+    return routes.length > 0 ? routes : null
+  } catch (error) {
+    console.error('Erro ao buscar rotas favoritas do usuário:', error)
+    return null
+  }
+}

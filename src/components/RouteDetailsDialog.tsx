@@ -1,3 +1,4 @@
+'use client'
 import {
   DialogClose,
   DialogContent,
@@ -28,6 +29,7 @@ import { RatingForm } from './RatingForm'
 import { Route, User } from '@/@types'
 import { getUf } from '@/utils/ufs'
 import { getRouteDetails, addRouteComment } from '@/utils/routes'
+import { updateUserFavoriteRoutes } from '@/utils/users'
 import { useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
 import Loading from './Loading'
@@ -90,12 +92,30 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   const [selectedRoute, setSelectedRoute] = useState<Route>({} as Route)
   const [directionsResponse, setDirectionsResponse] =
     useState<google.maps.DirectionsResult>({} as google.maps.DirectionsResult)
+  const [favoriteRoutes, setFavoriteRoutes] = useState<string[]>([])
+  const [loadingFavoriteRoute, setLoadingFavoriteRoute] = useState(false)
 
   const session = useSession()
   const user = session?.data?.user as User
 
+  const isFavoriteRoute = favoriteRoutes.includes(route.id)
+
   function handleComment() {
     setShowForm(true)
+  }
+
+  async function handleFavoriteRoute() {
+    setLoadingFavoriteRoute(true)
+    if (isFavoriteRoute) {
+      const newRoutes = favoriteRoutes.filter((item) => item !== route.id)
+      setFavoriteRoutes(newRoutes)
+      await updateUserFavoriteRoutes(user, newRoutes)
+    } else {
+      const newRoutes = [...favoriteRoutes, route.id]
+      setFavoriteRoutes(newRoutes)
+      await updateUserFavoriteRoutes(user, newRoutes)
+    }
+    setLoadingFavoriteRoute(false)
   }
 
   async function handleConfirmComment(data: FormData) {
@@ -116,6 +136,8 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
       setIsLoading(true)
       const routeDetails = await getRouteDetails(route)
       await calculateRoute(routeDetails)
+      const userFavoriteRoutes = user.favorite_routes ?? []
+      setFavoriteRoutes(userFavoriteRoutes)
       setIsLoading(false)
       setSelectedRoute(routeDetails)
     }
@@ -265,9 +287,16 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
                 </div>
 
                 <div className="actions-container">
-                  <button disabled>
-                    <Heart size={24} color="#50B2C0" />
-                    Favoritar
+                  <button
+                    disabled={loadingFavoriteRoute}
+                    onClick={handleFavoriteRoute}
+                  >
+                    <Heart
+                      weight={isFavoriteRoute ? 'fill' : 'regular'}
+                      size={24}
+                      color="#50B2C0"
+                    />
+                    {isFavoriteRoute ? 'Desfavoritar' : 'Favoritar'}
                   </button>
 
                   <button onClick={openGoogleMaps}>
