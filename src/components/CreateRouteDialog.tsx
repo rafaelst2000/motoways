@@ -41,6 +41,11 @@ type CreateRouteDialogProps = {
   onCreateRoute: () => void
 }
 
+type ImageFile = {
+  url: string
+  name: string
+}
+
 export const CreateRouteDialog = ({
   children,
   onCreateRoute,
@@ -63,7 +68,7 @@ export const CreateRouteDialog = ({
     useState<google.maps.DirectionsResult>({} as google.maps.DirectionsResult)
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<FileList>()
-  const [previewUrls, setPreviewUrls] = useState<string[]>([])
+  const [previewUrls, setPreviewUrls] = useState<ImageFile[]>([])
 
   function addInput() {
     const newLocations = [...locations]
@@ -121,10 +126,28 @@ export const CreateRouteDialog = ({
         place_id: item.place_id,
       }
     })
-    await createNewRoute(route, routeStops, files)
+    const filteredFiles = filterFilesByNames()
+    await createNewRoute(route, routeStops, filteredFiles)
     clearDialog()
     await onCreateRoute()
     setOpen(false)
+  }
+
+  function filterFilesByNames() {
+    if (!files) return []
+    const fileNames = previewUrls.map((item) => item.name)
+
+    const newFilesArray = Array.from(files)
+    const filteredFiles = newFilesArray.filter((file) => {
+      return fileNames.includes(file.name)
+    })
+
+    const newDataTransfer = new DataTransfer()
+    filteredFiles.forEach((file) => {
+      newDataTransfer.items.add(file)
+    })
+
+    return newDataTransfer.files
   }
 
   const disableButton =
@@ -213,13 +236,20 @@ export const CreateRouteDialog = ({
     setPreviewUrls([])
   }
 
+  function removePreviewImage(index: number) {
+    if (!files) return
+    const newPreviewUrls = previewUrls.filter((_, i) => i !== index)
+    setPreviewUrls(newPreviewUrls)
+  }
+
   useEffect(() => {
     if (files) {
-      const newFiles: string[] = []
+      const newFiles: ImageFile[] = []
       Array.from(files).forEach((file) => {
-        newFiles.push(URL.createObjectURL(file))
+        newFiles.push({ name: file.name, url: URL.createObjectURL(file) })
       })
       if (newFiles.length > 0) setPreviewUrls(newFiles)
+      else setPreviewUrls([])
     }
   }, [files])
 
@@ -315,21 +345,27 @@ export const CreateRouteDialog = ({
               </label>
               <input
                 id="upload-img"
-                name="files[]"
                 type="file"
                 multiple={true}
                 onChange={handleFileChange}
               />
               {previewUrls &&
-                previewUrls.map((preview) => (
-                  <Image
-                    key={preview}
-                    src={preview}
-                    alt=""
-                    width="130"
-                    height="130"
-                    quality={85}
-                  />
+                previewUrls.map((preview, index) => (
+                  <div className="upload-img-preview" key={preview.name}>
+                    <Image
+                      src={preview.url}
+                      alt=""
+                      width="130"
+                      height="130"
+                      quality={85}
+                    />
+                    <div
+                      onClick={() => removePreviewImage(index)}
+                      className="overlay"
+                    >
+                      <Trash size={32} color={'#50B2C0'} />
+                    </div>
+                  </div>
                 ))}
             </div>
             <h2>Vizualização</h2>

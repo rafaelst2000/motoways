@@ -132,6 +132,32 @@ export const CreateRouteDialogWrapper = styled('div', {
       borderRadius: 4,
     },
   },
+
+  '.upload-img-preview': {
+    width: 130,
+    height: 130,
+    position: 'relative',
+
+    '&:hover': {
+      cursor: 'pointer',
+      '.overlay': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 130,
+        height: 130,
+        background: 'rgba(0,0,0,0.8)',
+        borderRadius: 4,
+      },
+    },
+
+    '.overlay': {
+      display: 'none',
+    },
+  },
 })
 
 export const ActionsContainer = styled('div', {
