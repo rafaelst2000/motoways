@@ -36,7 +36,7 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 - [X] implementar "Favoritar"
 - [ ] implementar "Destinos próximos"
 - [ ] ao clicar numa imagem do carrousel, abrir full screen
-- [ ] permitir remover uma imagem ao fazer upload dela
+- [X] permitir remover uma imagem ao fazer upload dela
 - [X] permitir acessar o perfil de outro usuário
 - [ ] sugerir pontos de parada na rota, como restaurantes e postos de gasolina
 - [ ] sugerir rotas alternativas
