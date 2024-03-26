@@ -83,6 +83,7 @@ export const createUserIfNotExists = async (user) => {
       image: user.image,
       name: user.name,
       member_since: new Date().toJSON().slice(0, 10),
+      favorite_routes: [],
     }
     try {
       await addDoc(collection(firestore, 'users'), { ...newUser })
