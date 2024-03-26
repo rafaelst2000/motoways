@@ -4,28 +4,33 @@ export const PostCardContainer = styled('div', {
   width: '100%',
   background: '$gray-700',
   borderRadius: 8,
-  padding: 24,
   transition: '0.2s all',
-  cursor: 'pointer',
-  '&:hover': {
-    background: '$gray-600',
-  },
 
   '&:not(:first-of-type)': {
     marginTop: 12,
   },
 
   '.base-info': {
+    padding: '24px 24px 16px',
     display: 'grid',
     gridTemplateColumns: '40px 1fr 120px',
     gap: 16,
-    marginBottom: 32,
+
+    img: {
+      cursor: 'pointer',
+    },
 
     h3: {
       fontSize: '1rem',
       fontWeight: '400',
       color: '$gray-100',
       lineHeight: '160%',
+      cursor: 'pointer',
+
+      '&:hover': {
+        color: '$gray-300',
+        textDecoration: 'underline',
+      },
     },
 
     span: {
@@ -37,7 +42,12 @@ export const PostCardContainer = styled('div', {
   },
 
   '.card-content': {
-    height: 152,
+    '&:hover': {
+      background: '$gray-600',
+    },
+    borderRadius: '0 0 8px 8px',
+    cursor: 'pointer',
+    padding: '24px',
     display: 'flex',
     gap: 20,
     img: {

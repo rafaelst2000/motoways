@@ -4,9 +4,10 @@ import Image, { StaticImageData } from 'next/image'
 export interface AvatarProps {
   variant: 'xs' | 'sm' | 'lg'
   url: StaticImageData | string
+  onClick?: () => void
 }
 
-export default function Avatar({ variant, url }: AvatarProps) {
+export default function Avatar({ variant, url, onClick }: AvatarProps) {
   const sizes = {
     xs: 30,
     sm: 38,
@@ -15,7 +16,7 @@ export default function Avatar({ variant, url }: AvatarProps) {
   const size = sizes[variant]
 
   return (
-    <AvatarContainer variant={variant}>
+    <AvatarContainer variant={variant} onClick={onClick}>
       <Image
         src={url}
         width={size}

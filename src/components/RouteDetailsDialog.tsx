@@ -36,6 +36,7 @@ import Loading from './Loading'
 import { formattedDistance } from '@/utils/format-distance'
 import { formattedTimeToMinHours } from '@/utils/date-fns'
 import { Map } from './Map'
+import { useRouter } from 'next/router'
 
 type RouteDetailsProps = {
   children: ReactNode
@@ -95,10 +96,15 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   const [favoriteRoutes, setFavoriteRoutes] = useState<string[]>([])
   const [loadingFavoriteRoute, setLoadingFavoriteRoute] = useState(false)
 
+  const router = useRouter()
   const session = useSession()
   const user = session?.data?.user as User
 
   const isFavoriteRoute = favoriteRoutes.includes(route.id)
+
+  function goToUserProfile() {
+    router.push(`/profile/${route.user?.id}`)
+  }
 
   function handleComment() {
     setShowForm(true)
@@ -241,7 +247,9 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
                     <div>
                       <h2>{selectedRoute.title}</h2>
                       <span>{getUf(selectedRoute.uf)}</span>
-                      <p>Por: {route.user?.name || user.name}</p>
+                      <p className="profile-link" onClick={goToUserProfile}>
+                        Por: {route.user?.name || user.name}
+                      </p>
                     </div>
 
                     <div className="route-info">

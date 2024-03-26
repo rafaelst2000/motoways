@@ -84,6 +84,16 @@ export const RouteDetailsWrapper = styled('div', {
         justifyContent: 'space-between',
         alignItems: 'flex-end',
       },
+
+      '.profile-link': {
+        textDecoration: 'underline',
+        cursor: 'pointer',
+
+        '&:hover': {
+          transition: '0.2s',
+          color: '$green-100',
+        },
+      },
     },
 
     '.route-description': {

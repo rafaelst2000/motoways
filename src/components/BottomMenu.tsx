@@ -1,11 +1,10 @@
 import { BottomContainer } from '@/styles/components/BottomMenu'
 import { ChartLineUp, User, Binoculars, SignOut, Heart } from 'phosphor-react'
-import { useSession, signOut } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 export default function BottomMenu() {
   const router = useRouter()
-  const session = useSession()
 
   function goToPage(page: string) {
     router.push(`/${page}`)
