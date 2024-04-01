@@ -37,6 +37,7 @@ import { formattedDistance } from '@/utils/format-distance'
 import { formattedTimeToMinHours } from '@/utils/date-fns'
 import { Map } from './Map'
 import { useRouter } from 'next/router'
+import { ImagesDialog } from './ImagesDialog'
 
 type RouteDetailsProps = {
   children: ReactNode
@@ -88,6 +89,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
     nextArrow: <NextArrow />,
     prevArrow: <PreviousArrow />,
   }
+  const [showImagesDialog, setShowImagesDialog] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [loading, setIsLoading] = useState(false)
   const [selectedRoute, setSelectedRoute] = useState<Route>({} as Route)
@@ -220,129 +222,152 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
   }
 
   return (
-    <Dialog.Root onOpenChange={onOpenModal}>
-      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+    <>
+      <Dialog.Root onOpenChange={onOpenModal}>
+        <Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-      <Dialog.Portal>
-        <DialogOverlay />
-        <DialogContent>
-          <DialogClose>
-            <X size={24} />
-          </DialogClose>
+        <Dialog.Portal>
+          <DialogOverlay />
+          <DialogContent>
+            <DialogClose>
+              <X size={24} />
+            </DialogClose>
 
-          {loading || !selectedRoute?.id ? (
-            <Loading />
-          ) : (
-            <>
-              <RouteDetailsWrapper>
-                <div className="image-title-container">
-                  <Image
-                    src={selectedRoute.images[0]}
-                    alt=""
-                    width={157}
-                    height={130}
-                  />
-
-                  <div className="title-container">
-                    <div>
-                      <h2>{selectedRoute.title}</h2>
-                      <span>{getUf(selectedRoute.uf)}</span>
-                      <p className="profile-link" onClick={goToUserProfile}>
-                        Por: {route.user?.name || user.name}
-                      </p>
-                    </div>
-
-                    <div className="route-info">
-                      <Stars rating={selectedRoute.rate} />
-                    </div>
-                  </div>
-                </div>
-                <p className="route-description">{selectedRoute.description}</p>
-
-                {selectedRoute.images.length > 3 ? (
-                  <Slider {...settings}>
-                    {route.images.map((image) => (
-                      <div key={image} className="carrousel-item">
-                        <Image src={image} alt="" width={125} height={125} />
-                      </div>
-                    ))}
-                  </Slider>
-                ) : (
-                  <div className="images-container">
-                    {selectedRoute.images.map((image) => (
-                      <div key={image} className="carrousel-item">
-                        <Image src={image} alt="" width={125} height={125} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <div className="map-container">
-                  <h2>Vizualização</h2>
-                  <Map directions={directionsResponse} />
-                </div>
-
-                <div className="route-info-container">
-                  <div className="route-info-details">
-                    <MapPin size={24} color={'#50B2C0'} />
-                    <div>
-                      <p>Distância</p>
-                      <h3>{formattedDistance(route.distance)}</h3>
-                    </div>
-                  </div>
-
-                  <div className="route-info-details">
-                    <Timer size={24} color={'#50B2C0'} />
-                    <div>
-                      <p>Tempo estimado</p>
-                      <h3>{formattedTimeToMinHours(route.duration)}</h3>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="actions-container">
-                  <button
-                    disabled={loadingFavoriteRoute}
-                    onClick={handleFavoriteRoute}
-                  >
-                    <Heart
-                      weight={isFavoriteRoute ? 'fill' : 'regular'}
-                      size={24}
-                      color="#50B2C0"
+            {loading || !selectedRoute?.id ? (
+              <Loading />
+            ) : (
+              <>
+                <RouteDetailsWrapper>
+                  <div className="image-title-container">
+                    <Image
+                      src={selectedRoute.images[0]}
+                      alt=""
+                      width={157}
+                      height={130}
                     />
-                    {isFavoriteRoute ? 'Desfavoritar' : 'Favoritar'}
-                  </button>
 
-                  <button onClick={openGoogleMaps}>
-                    <PaperPlaneTilt size={24} color="#50B2C0" />
-                    Ver no maps
-                  </button>
-                </div>
-              </RouteDetailsWrapper>
+                    <div className="title-container">
+                      <div>
+                        <h2>{selectedRoute.title}</h2>
+                        <span>{getUf(selectedRoute.uf)}</span>
+                        <p className="profile-link" onClick={goToUserProfile}>
+                          Por: {route.user?.name || user.name}
+                        </p>
+                      </div>
 
-              <RouteCommentsWrapper>
-                <div className="comment-actions">
-                  <span>Comentários</span>
-                  {!showForm && <p onClick={handleComment}>Comentar</p>}
-                </div>
+                      <div className="route-info">
+                        <Stars rating={selectedRoute.rate} />
+                      </div>
+                    </div>
+                  </div>
+                  <p className="route-description">
+                    {selectedRoute.description}
+                  </p>
 
-                <ul>
-                  {showForm && (
-                    <RatingForm
-                      onCancel={() => setShowForm(false)}
-                      onConfirm={handleConfirmComment}
-                    />
+                  {selectedRoute.images.length > 3 ? (
+                    <Slider {...settings}>
+                      {route.images.map((image) => (
+                        <div key={image} className="carrousel-item">
+                          <Image
+                            src={image}
+                            alt=""
+                            width={125}
+                            height={125}
+                            onClick={() => setShowImagesDialog(true)}
+                          />
+                        </div>
+                      ))}
+                    </Slider>
+                  ) : (
+                    <div className="images-container">
+                      {selectedRoute.images.map((image) => (
+                        <div key={image} className="carrousel-item">
+                          <Image
+                            onClick={() => setShowImagesDialog(true)}
+                            src={image}
+                            alt=""
+                            width={125}
+                            height={125}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   )}
-                  {Array.isArray(selectedRoute.comments) &&
-                    selectedRoute.comments.map((comment) => (
-                      <CommentCard key={comment.id} comment={comment} />
-                    ))}
-                </ul>
-              </RouteCommentsWrapper>
-            </>
-          )}
-        </DialogContent>
-      </Dialog.Portal>
-    </Dialog.Root>
+
+                  <div className="map-container">
+                    <h2>Vizualização</h2>
+                    <Map directions={directionsResponse} />
+                  </div>
+
+                  <div className="route-info-container">
+                    <div className="route-info-details">
+                      <MapPin size={24} color={'#50B2C0'} />
+                      <div>
+                        <p>Distância</p>
+                        <h3>{formattedDistance(route.distance)}</h3>
+                      </div>
+                    </div>
+
+                    <div className="route-info-details">
+                      <Timer size={24} color={'#50B2C0'} />
+                      <div>
+                        <p>Tempo estimado</p>
+                        <h3>{formattedTimeToMinHours(route.duration)}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="actions-container">
+                    <button
+                      disabled={loadingFavoriteRoute}
+                      onClick={handleFavoriteRoute}
+                    >
+                      <Heart
+                        weight={isFavoriteRoute ? 'fill' : 'regular'}
+                        size={24}
+                        color="#50B2C0"
+                      />
+                      {isFavoriteRoute ? 'Desfavoritar' : 'Favoritar'}
+                    </button>
+
+                    <button onClick={openGoogleMaps}>
+                      <PaperPlaneTilt size={24} color="#50B2C0" />
+                      Ver no maps
+                    </button>
+                  </div>
+                </RouteDetailsWrapper>
+
+                <RouteCommentsWrapper>
+                  <div className="comment-actions">
+                    <span>Comentários</span>
+                    {!showForm && <p onClick={handleComment}>Comentar</p>}
+                  </div>
+
+                  <ul>
+                    {showForm && (
+                      <RatingForm
+                        onCancel={() => setShowForm(false)}
+                        onConfirm={handleConfirmComment}
+                      />
+                    )}
+                    {Array.isArray(selectedRoute.comments) &&
+                      selectedRoute.comments.map((comment) => (
+                        <CommentCard key={comment.id} comment={comment} />
+                      ))}
+                  </ul>
+                </RouteCommentsWrapper>
+              </>
+            )}
+
+            {showImagesDialog && (
+              <ImagesDialog
+                setIsOpen={setShowImagesDialog}
+                images={route.images}
+              />
+            )}
+          </DialogContent>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
   )
 }

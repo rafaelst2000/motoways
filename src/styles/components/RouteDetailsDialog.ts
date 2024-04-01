@@ -149,6 +149,7 @@ export const RouteDetailsWrapper = styled('div', {
 
     img: {
       borderRadius: 8,
+      cursor: 'pointer',
     },
   },
 
@@ -223,6 +224,7 @@ export const RouteDetailsWrapper = styled('div', {
         width: '100%',
         height: 'auto',
         'aspect-ratio': '1 / 1',
+        cursor: 'pointer',
       },
     },
   },
