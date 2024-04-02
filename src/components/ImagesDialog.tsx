@@ -1,7 +1,5 @@
-'use client'
 import { DialogClose, DialogContent } from '@/styles/components/ImagesDialog'
 import { CaretLeft, CaretRight, X } from 'phosphor-react'
-import * as Dialog from '@radix-ui/react-dialog'
 import { CSSProperties } from 'react'
 
 import Slider from 'react-slick'
@@ -57,26 +55,22 @@ export const ImagesDialog = ({ setIsOpen, images }: ImagesDialogProps) => {
   console.log('aqui')
 
   return (
-    <Dialog.Root open>
-      <Dialog.Portal>
-        <DialogContent>
-          <DialogClose onClick={() => setIsOpen(false)}>
-            <X size={24} />
-          </DialogClose>
+    <DialogContent>
+      <DialogClose onClick={() => setIsOpen(false)}>
+        <X size={24} />
+      </DialogClose>
 
-          <div className="dialog-content">
-            <Slider {...settings}>
-              {images.map((image) => (
-                <div key={image} className="slide-container">
-                  <div className="image-container">
-                    <img src={image} alt="" />
-                  </div>
-                </div>
-              ))}
-            </Slider>
-          </div>
-        </DialogContent>
-      </Dialog.Portal>
-    </Dialog.Root>
+      <div className="dialog-content">
+        <Slider {...settings}>
+          {images.map((image) => (
+            <div key={image} className="images-slide-container">
+              <div className="images-slide-image-container">
+                <img src={image} alt="" />
+              </div>
+            </div>
+          ))}
+        </Slider>
+      </div>
+    </DialogContent>
   )
 }

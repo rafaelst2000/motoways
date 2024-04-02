@@ -7,6 +7,17 @@ export const DialogOverlay = styled(Dialog.Overlay, {
   background: '#00000099',
 })
 
+export const DialogContentImages = styled('div', {
+  position: 'fixed',
+  top: 0,
+  right: 0,
+  width: '100%',
+  height: '100%',
+  background: '$gray-800',
+  padding: '24px 48px',
+  overflowY: 'none',
+})
+
 export const DialogContent = styled(Dialog.Content, {
   position: 'fixed',
   top: 0,

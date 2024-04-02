@@ -11,12 +11,21 @@ export const DialogContent = styled(Dialog.Content, {
   zIndex: 999,
   padding: '24px 42px',
 
+  '@media screen and (max-width: 1130px)': {
+    width: '100%',
+    padding: '12px 24px',
+  },
+
   '.dialog-content': {
     width: '100%',
     height: 'calc(100vh - 48px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+
+    '@media screen and (max-width: 1130px)': {
+      height: 'calc(100vh - 24px)',
+    },
   },
 
   '.carrousel-container-images': {
@@ -28,14 +37,18 @@ export const DialogContent = styled(Dialog.Content, {
     height: 42,
   },
 
-  '.slide-container': {
+  '.images-slide-container': {
     height: 'calc(100vh - 48px)',
     width: '100%',
     display: 'flex !important',
     alignItems: 'center',
     justifyContent: 'center',
 
-    '.image-container': {
+    '@media screen and (max-width: 1130px)': {
+      height: 'calc(100vh - 24px)',
+    },
+
+    '.images-slide-image-container': {
       width: '100% !important',
       height: '100% !important',
       display: 'flex',
@@ -51,7 +64,7 @@ export const DialogContent = styled(Dialog.Content, {
   },
 })
 
-export const DialogClose = styled(Dialog.Close, {
+export const DialogClose = styled('button', {
   color: '$gray-400',
   background: 'none',
   border: 'none',
@@ -60,6 +73,5 @@ export const DialogClose = styled(Dialog.Close, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  zIndex: 1999,
   cursor: 'pointer',
 })
