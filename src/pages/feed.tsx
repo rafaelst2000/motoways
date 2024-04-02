@@ -1,6 +1,5 @@
 import { CreateRouteDialog } from '@/components/CreateRouteDialog'
 import PostCard from '@/components/PostCard'
-import PostCardMin from '@/components/PostCardMin'
 import PostCardMy from '@/components/PostCardMy'
 import SideMenu from '@/components/SideMenu'
 import { FeedContainer } from '@/styles/Feed'
@@ -9,66 +8,28 @@ import { getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { GetServerSideProps } from 'next'
-import { getUserLastRoute, getFeedRoutes } from '@/utils/routes'
+import {
+  getUserLastRoute,
+  getFeedRoutes,
+  getAllRouteStops,
+} from '@/utils/routes'
 import Head from 'next/head'
-import { Route } from '@/@types'
+import { Route, RouteStop } from '@/@types'
 import { useEffect, useState } from 'react'
 import BottomMenu from '@/components/BottomMenu'
+import SideContent from '@/components/feed/SideContent'
 
 interface FeedProps {
   userLastRoute: Route
   feedRoutes: Route[]
+  allRouteStops: RouteStop[]
 }
 
-const tempRoutes: Route[] = [
-  {
-    description: 'teste',
-    distance: 200,
-    id: '1',
-    images: [
-      'https://images.unsplash.com/photo-1657816909730-4b7cbfe2da41?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ],
-    publish_at: '2023-11-01T11:43:59.675Z',
-    rate: 3,
-    uf: 'sc',
-    user_id: 'd4a7102a-6afb-4429-bb0f-c2e5b03eff0a',
-    title: 'Teste',
-    duration: 1000,
-    route_stops: [],
-  },
-  {
-    description: 'teste 2 ',
-    distance: 200,
-    id: '122',
-    images: [
-      'https://images.unsplash.com/photo-1657816909730-4b7cbfe2da41?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ],
-    publish_at: '2023-11-01T11:43:59.675Z',
-    rate: 3,
-    uf: 'sc',
-    user_id: 'd4a7102a-6afb-4429-bb0f-c2e5b03eff0a',
-    title: 'Teste 2',
-    duration: 1000,
-    route_stops: [],
-  },
-  {
-    description: 'teste 3 ',
-    distance: 200,
-    id: '1223',
-    images: [
-      'https://images.unsplash.com/photo-1657816909730-4b7cbfe2da41?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ],
-    publish_at: '2023-11-01T11:43:59.675Z',
-    rate: 3,
-    uf: 'sc',
-    user_id: 'd4a7102a-6afb-4429-bb0f-c2e5b03eff0a',
-    title: 'Teste 3',
-    duration: 1000,
-    route_stops: [],
-  },
-]
-
-export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
+export default function Feed({
+  userLastRoute,
+  feedRoutes,
+  allRouteStops,
+}: FeedProps) {
   const session = useSession()
   const user = session?.data?.user
   const [lastRoute, setLastRoute] = useState<Route>({} as Route)
@@ -120,20 +81,7 @@ export default function Feed({ userLastRoute, feedRoutes }: FeedProps) {
             routes.map((route) => <PostCard key={route.id} route={route} />)}
         </div>
 
-        <div className="side-content">
-          <div className="section-title">
-            <h2>Próximo a você</h2>
-          </div>
-
-          <div className="cards">
-            {tempRoutes &&
-              tempRoutes.map((route) => (
-                <div key={route.id}>
-                  <PostCardMin route={route} showDetails={false} />
-                </div>
-              ))}
-          </div>
-        </div>
+        <SideContent allRouteStops={allRouteStops} />
       </FeedContainer>
       <BottomMenu />
     </>
@@ -152,11 +100,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const userLastRoute = (await getUserLastRoute(session.user?.id)) as Route
   const feedRoutes = (await getFeedRoutes(session.user?.id)) as Route[]
+  const allRouteStops = (await getAllRouteStops()) as RouteStop[]
   return {
     props: {
       session,
       userLastRoute,
       feedRoutes,
+      allRouteStops,
     },
   }
 }

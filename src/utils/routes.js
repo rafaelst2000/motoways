@@ -221,3 +221,20 @@ export const getUserFavoriteRoutes = async (userId = '') => {
     return null
   }
 }
+
+export const getAllRouteStops = async () => {
+  try {
+    const routeStops = []
+    const q = query(collection(firestore, 'route_stops'))
+    const querySnapshot = await getDocs(q)
+
+    querySnapshot.forEach((doc) => {
+      routeStops.push(doc.data())
+    })
+
+    return routeStops
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
