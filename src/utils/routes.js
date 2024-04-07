@@ -7,6 +7,8 @@ import {
   where,
   orderBy,
   limit,
+  groupBy,
+  startAt,
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from '@firebase/storage'
 import { getUserById } from './users'
@@ -225,11 +227,19 @@ export const getUserFavoriteRoutes = async (userId = '') => {
 export const getAllRouteStops = async () => {
   try {
     const routeStops = []
-    const q = query(collection(firestore, 'route_stops'))
+    const routeStopsIds = []
+    const q = query(
+      collection(firestore, 'route_stops'),
+      orderBy('route_id'),
+      orderBy('index', 'desc'),
+    )
     const querySnapshot = await getDocs(q)
 
     querySnapshot.forEach((doc) => {
-      routeStops.push(doc.data())
+      if (!routeStopsIds.includes(doc.data().route_id)) {
+        routeStops.push(doc.data())
+        routeStopsIds.push(doc.data().route_id)
+      }
     })
 
     return routeStops

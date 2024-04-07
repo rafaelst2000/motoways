@@ -56,10 +56,6 @@ interface SideContentProps {
   allRouteStops: RouteStop[]
 }
 
-interface GroupedLocations {
-  [key: string]: RouteStop[]
-}
-
 interface UserLocation {
   lat: number
   lng: number
@@ -69,46 +65,39 @@ export default function SideContent({ allRouteStops }: SideContentProps) {
   const [userLocation, setUserLocation] = useState<UserLocation>(
     {} as UserLocation,
   )
-
-  const radius = 10
   const hasGranttedLocationPermission = Object.entries(userLocation).length > 0
 
-  const groupedByRouteId = allRouteStops.reduce(
-    (acc: GroupedLocations, location) => {
-      const { route_id: routeId } = location
-      acc[routeId] = location
-      return acc
-    },
-    {},
-  )
+  const isWithinRadius = (location: RouteStop, radius: number) => {
+    const earthRadiusKm = 6371
+    const { lat: lat1, lng: lng1 } = userLocation
+    const { lat: lat2, lng: lng2 } = location.location
 
-  function calculateDistance(
-    location1: UserLocation,
-    location2: UserLocation,
-  ): number {
-    const R = 6371 // Raio da Terra em quilômetros
-    const dLat = (location2.lat - location1.lat) * (Math.PI / 180)
-    const dLon = (location2.lng - location1.lng) * (Math.PI / 180)
+    const dLat = degreesToRadians(lat2 - lat1)
+    const dLng = degreesToRadians(lng2 - lng1)
+
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(location1.lat * (Math.PI / 180)) *
-        Math.cos(location2.lat * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2)
+      Math.cos(degreesToRadians(lat1)) *
+        Math.cos(degreesToRadians(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2)
+
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    const distance = R * c
-    return distance
+    const distance = earthRadiusKm * c
+
+    return distance <= radius
   }
 
-  const filteredRouteStops = Object.values(groupedByRouteId).filter(
-    (routeStop: RouteStop) => {
-      const distance = calculateDistance(userLocation, routeStop.location)
-      return distance <= radius
-    },
+  const degreesToRadians = (degrees: number) => {
+    return degrees * (Math.PI / 180)
+  }
+
+  // Agora você pode filtrar o array de locations para encontrar aqueles dentro do raio de 200km
+  const locationsWithinRadius = allRouteStops.filter((location) =>
+    isWithinRadius(location, 150),
   )
 
-  console.log('eu', filteredRouteStops)
-  console.log('eu 2', groupedByRouteId)
+  console.log('locationsWithinRadius', locationsWithinRadius)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -118,8 +107,6 @@ export default function SideContent({ allRouteStops }: SideContentProps) {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           })
-          console.log('Latitude: ', position.coords.latitude)
-          console.log('Longitude: ', position.coords.longitude)
           // Aqui você pode fazer o que precisar com a latitude e longitude
         },
         (error) => {
