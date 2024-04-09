@@ -22,7 +22,7 @@ Este projeto está sendo desenvolvido como **Trabalho de Conclusão de Curso** n
 
 ## **📩 Commits**
 
-- Seguindo o padrão do *Conventional Commits*
+- Seguindo o padrão do _Conventional Commits_
 
 ## **⚡Executando o projeto em ambiente de Produção**
 
@@ -31,13 +31,14 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 ```
 
 ## **🐛 ✨ Correções de bugs e melhorias futuras**
+
 - [ ] mudar o destino de um roteiro faz o mapa eventualmente crashar
-- [X] melhorias no modo responsivo
-- [X] implementar "Favoritar"
-- [X] permitir remover uma imagem ao fazer upload dela
-- [X] permitir acessar o perfil de outro usuário
-- [X] ao clicar numa imagem do carrousel, abrir full screen
-- [ ] implementar "Destinos próximos"
+- [x] melhorias no modo responsivo
+- [x] implementar "Favoritar"
+- [x] permitir remover uma imagem ao fazer upload dela
+- [x] permitir acessar o perfil de outro usuário
+- [x] ao clicar numa imagem do carrousel, abrir full screen
+- [x] implementar "Destinos próximos"
 - [ ] sugerir pontos de parada na rota, como restaurantes e postos de gasolina
 - [ ] sugerir rotas alternativas
 

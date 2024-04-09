@@ -248,3 +248,23 @@ export const getAllRouteStops = async () => {
     return null
   }
 }
+
+export const getRoutesByRouteIds = async (routeIds = []) => {
+  if (!routeIds.length) return []
+  try {
+    const routes = []
+    const q = query(
+      collection(firestore, 'routes'),
+      where('id', 'in', routeIds),
+    )
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      routes.push(doc.data())
+    })
+
+    return routes
+  } catch (error) {
+    console.error('Erro ao buscar rotas filtradas pelo id:', error)
+    return []
+  }
+}
