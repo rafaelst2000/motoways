@@ -4,6 +4,7 @@ import { Route, RouteStop } from '@/@types'
 import PostCardMin from '../PostCardMin'
 import { useEffect, useState } from 'react'
 import { getRoutesByRouteIds } from '@/utils/routes'
+import { useSession } from 'next-auth/react'
 
 interface SideContentProps {
   allRouteStops: RouteStop[]
@@ -15,6 +16,9 @@ interface UserLocation {
 }
 
 export default function SideContent({ allRouteStops }: SideContentProps) {
+  const session = useSession()
+  const user = session?.data?.user
+
   const [userLocation, setUserLocation] = useState<UserLocation>(
     {} as UserLocation,
   )
@@ -74,8 +78,11 @@ export default function SideContent({ allRouteStops }: SideContentProps) {
     }
 
     async function getRoutesByIds(routeIds: string[]) {
-      const routes = await getRoutesByRouteIds(routeIds)
-      const sortedRoutes = routes.sort((a, b) => b.rate - a.rate).slice(0, 3)
+      const routes = (await getRoutesByRouteIds(routeIds)) as Route[]
+      const sortedRoutes = routes
+        .filter((route) => route.user_id !== user?.id)
+        .sort((a, b) => b.rate - a.rate)
+        .slice(0, 3)
       setSideContentRoutes(sortedRoutes)
     }
 
