@@ -71,3 +71,16 @@ export interface Route {
   route_stops: RouteStop[]
   comments?: RouteComment[]
 }
+
+export interface NearbySearch {
+  business_status: string
+  geometry: {
+    location: {
+      lat: number
+      lng: number
+    }
+  }
+  name: string
+  place_id: string
+  rating: number
+}

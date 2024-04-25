@@ -21,6 +21,8 @@ export interface PlaceDetails {
   place_id: string
   name: string
   formatted_address: string
+  rating?: number
+  business_status?: string
   geometry: {
     location: Location
   }

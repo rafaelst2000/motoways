@@ -12,6 +12,7 @@ import {
   Check,
   Flag,
   FlagCheckered,
+  Lightbulb,
   MapPin,
   Plus,
   Timer,
@@ -35,6 +36,7 @@ import { createNewRoute } from '@/utils/routes'
 import { formattedDistance } from '@/utils/format-distance'
 import { formattedTimeToMinHours } from '@/utils/date-fns'
 import { existsUf } from '@/utils/ufs'
+import { NearbySearch } from '@/@types'
 
 type CreateRouteDialogProps = {
   children: ReactNode
@@ -44,6 +46,11 @@ type CreateRouteDialogProps = {
 type ImageFile = {
   url: string
   name: string
+}
+
+type Point = {
+  lat: number
+  lng: number
 }
 
 export const CreateRouteDialog = ({
@@ -242,6 +249,70 @@ export const CreateRouteDialog = ({
     setPreviewUrls(newPreviewUrls)
   }
 
+  async function getNearbyPlaces(currentLocation: Point) {
+    const { lat, lng } = currentLocation
+    const categories = ['restaurant', 'gas_station', 'tourist_attraction']
+    const nearbyPlaces: NearbySearch[] = []
+
+    for (const category of categories) {
+      const response = await fetch(
+        `/api/nearbyPlaces?lat=${lat}&lng=${lng}&category=${category}`,
+      )
+      const data = await response.json()
+      const bestPlaces = data
+        .filter(
+          (place: NearbySearch) =>
+            place?.rating && place.business_status === 'OPERATIONAL',
+        )
+        .sort((a: NearbySearch, b: NearbySearch) => b.rating - a.rating)
+        .slice(0, 2)
+      nearbyPlaces.push(...bestPlaces)
+    }
+    return nearbyPlaces
+  }
+
+  async function suggestPlacesAlongRoute() {
+    const startPoint = locations[0].geometry.location
+    const endPoint = locations[locations.length - 1].geometry.location
+    const response = await fetch(
+      `/api/directions?lat1=${startPoint.lat}&lng1=${startPoint.lng}&lat2=${endPoint.lat}&lng2=${endPoint.lng}`,
+    )
+    const data = await response.json()
+    const route = data.routes[0]
+    const waypoints = route.legs.flatMap((leg: any) =>
+      leg.steps.flatMap((step: any) => ({
+        lat: step.end_location.lat,
+        lng: step.end_location.lng,
+      })),
+    )
+    const groupedRoute = groupPoints(waypoints)
+    console.log('groupedRoute', groupedRoute)
+    const places: NearbySearch[] = []
+    for (const item of groupedRoute) {
+      const nearbyPlaces = await getNearbyPlaces(item)
+      places.push(...nearbyPlaces)
+    }
+
+    console.log('Places along the route:', places)
+    return places
+  }
+
+  function groupPoints(route: Point[]) {
+    const totalDistance = distance / 1000
+    const numSegments = Math.floor(totalDistance / 100)
+    const groupedPoints: Point[] = []
+    const groupSize = Math.ceil(route.length / numSegments)
+
+    for (let i = 0; i < numSegments; i++) {
+      const startIndex = i * groupSize
+      const endIndex = Math.min((i + 1) * groupSize, route.length)
+      const group = route.slice(startIndex, endIndex)
+      groupedPoints.push(group[0])
+    }
+
+    return groupedPoints
+  }
+
   useEffect(() => {
     if (files) {
       const newFiles: ImageFile[] = []
@@ -282,6 +353,15 @@ export const CreateRouteDialog = ({
               }
               icon={<Flag color="#8381d9" />}
             />
+
+            <GooglePlaceInput
+              css={{ maxWidth: '100%', marginBottom: '12px' }}
+              placeholder="Seu destino"
+              onLocationSelected={(location) =>
+                onAddLocation(location, locations[locations.length - 1].id)
+              }
+              icon={<FlagCheckered color="#8381d9" />}
+            />
             {locations.length > 2 &&
               locations.map(
                 (item, index) =>
@@ -316,16 +396,26 @@ export const CreateRouteDialog = ({
                 </button>
               </AddContainer>
             )}
+
             {
-              <GooglePlaceInput
-                css={{ maxWidth: '100%', marginBottom: '12px' }}
-                placeholder="Seu destino"
-                onLocationSelected={(location) =>
-                  onAddLocation(location, locations[locations.length - 1].id)
-                }
-                icon={<FlagCheckered color="#8381d9" />}
-              />
+              <>
+                <h2>Sugestões de paradas</h2>
+                <div className="suggestion-container">
+                  <Input
+                    disabled
+                    css={{}}
+                    icon={<Lightbulb color="#8381d9" />}
+                  />
+
+                  <AddContainer style={{ margin: 0 }}>
+                    <button disabled={false} onClick={suggestPlacesAlongRoute}>
+                      <Plus color="#50b2c0" />
+                    </button>
+                  </AddContainer>
+                </div>
+              </>
             }
+
             <h2>Sua avaliação</h2>
             <Stars rating={currentRate} size="md" setRating={setCurrentRate} />
 

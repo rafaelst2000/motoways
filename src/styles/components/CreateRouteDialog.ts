@@ -158,6 +158,13 @@ export const CreateRouteDialogWrapper = styled('div', {
       display: 'none',
     },
   },
+
+  '.suggestion-container': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
 })
 
 export const ActionsContainer = styled('div', {
