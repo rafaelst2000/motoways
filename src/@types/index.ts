@@ -83,4 +83,7 @@ export interface NearbySearch {
   name: string
   place_id: string
   rating: number
+  plus_code: {
+    compound_code: string
+  }
 }
