@@ -40,7 +40,6 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 - [x] ao clicar numa imagem do carrousel, abrir full screen
 - [x] implementar "Destinos próximos"
 - [ ] - CANCELADO - sugerir pontos de parada na rota, como restaurantes e postos de gasolina
-- [ ] sugerir rotas alternativas
 
 <!-- Badges -->
 
