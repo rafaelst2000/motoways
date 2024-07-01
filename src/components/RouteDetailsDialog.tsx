@@ -200,7 +200,7 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
           navigator.userAgent,
         )
       // eslint-disable-next-line
-      const directions = directionsResponse as any
+        const directions = directionsResponse as any;
 
       const startLocation = `${directions.request.origin.location.lat()},${directions.request.origin.location.lng()}`
       const endLocation = `${directions.request.destination.location.lat()},${directions.request.destination.location.lng()}`
@@ -208,14 +208,15 @@ export const RouteDetailsDialog = ({ children, route }: RouteDetailsProps) => {
         ? directions.request.waypoints
             .map(
               // eslint-disable-next-line
-          (waypoint: any) =>
+                    (waypoint: any) =>
                 `${waypoint.location.location.lat()},${waypoint.location.location.lng()}`,
             )
             .join('|')
         : []
       const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${startLocation}&destination=${endLocation}&waypoints=${waypoints}&travelmode=driving`
+
       if (isMobile) {
-        window.location.href = `google.navigation:q=${mapsUrl}&mode=d`
+        window.location.href = mapsUrl
       } else {
         window.open(mapsUrl, '_blank')
       }

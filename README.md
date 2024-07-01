@@ -41,6 +41,21 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 - [x] implementar "Destinos próximos"
 - [ ] - CANCELADO - sugerir pontos de parada na rota, como restaurantes e postos de gasolina
 
+## **📝 To do**
+
+### Código
+
+- [ ] Reativar todas as apis
+- [ ] Verificar se a plataforma está inteiramente funcional (incluindo responsivo e deploy)
+
+### Escrita
+
+- [ ] Escrever sobre as features implementadas
+- [ ] Escrever sobre as features não implementadas
+- [ ] Criar o formulário de pesquisa
+- [ ] Coletar dados
+- [ ] Finalizar o projeto
+
 <!-- Badges -->
 
 [node_version_badge]: https://img.shields.io/badge/Node-18.16.0-green
