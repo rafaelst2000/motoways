@@ -45,7 +45,7 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 
 ### Código
 
-- [ ] Reativar todas as apis
+- [x] Reativar todas as apis
 - [ ] Verificar se a plataforma está inteiramente funcional (incluindo responsivo e deploy)
 
 ### Escrita

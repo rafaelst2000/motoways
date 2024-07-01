@@ -49,6 +49,10 @@ export const ExploreContainer = styled('main', {
 
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
+
+    '.page-title': {
+      marginBottom: '0.5rem !important',
+    },
     paddingBottom: '4rem',
     '.center-content': {
       paddingTop: '0',
@@ -76,4 +80,8 @@ export const TagsContainer = styled('div', {
   gap: '12px',
   marginTop: 40,
   marginBottom: 48,
+
+  '@media screen and (max-width: 1130px)': {
+    margin: '1rem 0',
+  },
 })

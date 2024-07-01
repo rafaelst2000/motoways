@@ -93,6 +93,12 @@ export const ProfileContainer = styled('main', {
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
     paddingBottom: '4rem',
+    gap: '1rem',
+
+    '.page-title': {
+      marginBottom: '0.5rem',
+    },
+
     '.info-item-container': {
       display: 'flex',
       alignItems: 'flex-start',

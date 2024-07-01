@@ -68,6 +68,11 @@ export default function Feed({
             </CreateRouteDialog>
           </div>
 
+          <SideContent
+            className="responsive-side-content"
+            allRouteStops={allRouteStops}
+          />
+
           {lastRoute && lastRoute.id && (
             <>
               <h2>Seu último passeio</h2>
@@ -81,7 +86,10 @@ export default function Feed({
             routes.map((route) => <PostCard key={route.id} route={route} />)}
         </div>
 
-        <SideContent allRouteStops={allRouteStops} />
+        <SideContent
+          className="desktop-side-content"
+          allRouteStops={allRouteStops}
+        />
       </FeedContainer>
       <BottomMenu />
     </>

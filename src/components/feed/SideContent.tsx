@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 
 interface SideContentProps {
   allRouteStops: RouteStop[]
+  className?: string
 }
 
 interface UserLocation {
@@ -15,7 +16,10 @@ interface UserLocation {
   lng: number
 }
 
-export default function SideContent({ allRouteStops }: SideContentProps) {
+export default function SideContent({
+  allRouteStops,
+  className = '',
+}: SideContentProps) {
   const session = useSession()
   const user = session?.data?.user
 
@@ -98,7 +102,7 @@ export default function SideContent({ allRouteStops }: SideContentProps) {
   return (
     <>
       {hasGranttedLocationPermission && (
-        <div className="side-content">
+        <div className={`side-content ${className}`}>
           <div className="section-title">
             <h2>Procurando um rolê perto?</h2>
           </div>

@@ -141,13 +141,35 @@ export const FeedContainer = styled('main', {
 
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
+    gridTemplateAreas: "'side' 'center'",
     paddingBottom: '4rem',
+
     '.center-content': {
       paddingTop: '0',
+
+      '.page-title-container': {
+        marginBottom: '0.5rem',
+      },
+    },
+
+    '.desktop-side-content': {
+      display: 'none',
     },
 
     '.side-content': {
-      display: 'none',
+      paddingTop: '0',
+
+      '.section-title': {
+        margin: 0,
+      },
+    },
+
+    h2: {
+      margin: '16px 0 8px',
+    },
+
+    '.recent': {
+      margin: '16px 0 8px !important',
     },
 
     'center-content': {
