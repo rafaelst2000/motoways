@@ -139,6 +139,12 @@ export const FeedContainer = styled('main', {
     gap: '1.5rem',
   },
 
+  '@media screen and (min-width: 1130px)': {
+    '.responsive-side-content': {
+      display: 'none',
+    },
+  },
+
   '@media screen and (max-width: 1130px)': {
     gridTemplateColumns: '1fr',
     gridTemplateAreas: "'side' 'center'",
