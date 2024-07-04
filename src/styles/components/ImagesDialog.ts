@@ -38,28 +38,24 @@ export const DialogContent = styled(Dialog.Content, {
   },
 
   '.images-slide-container': {
-    height: 'calc(100vh - 48px)',
     width: '100%',
     display: 'flex !important',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
 
     '@media screen and (max-width: 1130px)': {
       height: 'calc(100vh - 24px)',
     },
+  },
+  '.images-slide-image-container': {
+    width: '100% !important',
+    height: '100% !important',
+    padding: '0 24px',
 
-    '.images-slide-image-container': {
-      width: '100% !important',
-      height: '100% !important',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '0 24px',
-
-      img: {
-        display: 'block',
-        maxWidth: '100%',
-      },
+    img: {
+      display: 'block',
+      maxWidth: '100%',
+      'object-fit': 'fill',
     },
   },
 })

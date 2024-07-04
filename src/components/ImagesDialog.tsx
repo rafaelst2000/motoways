@@ -62,10 +62,8 @@ export const ImagesDialog = ({ setIsOpen, images }: ImagesDialogProps) => {
       <div className="dialog-content">
         <Slider {...settings}>
           {images.map((image) => (
-            <div key={image} className="images-slide-container">
-              <div className="images-slide-image-container">
-                <img src={image} alt="" />
-              </div>
+            <div key={image} className="images-slide-image-container">
+              <img src={image} alt="" />
             </div>
           ))}
         </Slider>
