@@ -52,7 +52,6 @@ export const ImagesDialog = ({ setIsOpen, images }: ImagesDialogProps) => {
     nextArrow: <NextArrow />,
     prevArrow: <PreviousArrow />,
   }
-  console.log('aqui')
 
   return (
     <DialogContent>

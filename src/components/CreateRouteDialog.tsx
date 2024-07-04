@@ -36,8 +36,6 @@ import { createNewRoute } from '@/utils/routes'
 import { formattedDistance } from '@/utils/format-distance'
 import { formattedTimeToMinHours } from '@/utils/date-fns'
 import { existsUf } from '@/utils/ufs'
-import { NearbySearch } from '@/@types'
-import Loading from './Loading'
 
 type CreateRouteDialogProps = {
   children: ReactNode
@@ -47,11 +45,6 @@ type CreateRouteDialogProps = {
 type ImageFile = {
   url: string
   name: string
-}
-
-type Point = {
-  lat: number
-  lng: number
 }
 
 export const CreateRouteDialog = ({
@@ -77,8 +70,6 @@ export const CreateRouteDialog = ({
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<FileList>()
   const [previewUrls, setPreviewUrls] = useState<ImageFile[]>([])
-  const [suggestions, setSuggestions] = useState<NearbySearch[]>([])
-  const [loadingSuggestions, setLoadingSuggestions] = useState(false)
 
   function addInput() {
     const newLocations = [...locations]
@@ -103,10 +94,6 @@ export const CreateRouteDialog = ({
     const { id } = newLocations[index]
     newLocations[index] = { ...location, id, index }
     setLocations(newLocations)
-
-    if (uuid === locations[locations.length - 1].id && locations.length >= 2) {
-      suggestPlacesAlongRoute()
-    }
   }
 
   function onRemoveLocation(uuid: string) {
@@ -256,88 +243,6 @@ export const CreateRouteDialog = ({
     setPreviewUrls(newPreviewUrls)
   }
 
-  async function suggestPlacesAlongRoute() {
-    const startPoint = locations[0].geometry.location
-    const endPoint = locations[locations.length - 1].geometry.location
-    const response = await fetch(
-      `/api/directions?lat1=${startPoint.lat}&lng1=${startPoint.lng}&lat2=${endPoint.lat}&lng2=${endPoint.lng}`,
-    )
-    const data = await response.json()
-    const route = data.routes[0]
-    const waypoints = route.legs.flatMap((leg: any) =>
-      leg.steps.flatMap((step: any) => ({
-        lat: step.end_location.lat,
-        lng: step.end_location.lng,
-      })),
-    )
-    const groupedRoute = groupPoints(waypoints)
-    const places: NearbySearch[] = []
-    for (const item of groupedRoute) {
-      const nearbyPlaces = await getNearbyPlaces(item)
-      places.push(...nearbyPlaces)
-    }
-
-    setSuggestions(places)
-  }
-
-  async function getNearbyPlaces(currentLocation: Point) {
-    setLoadingSuggestions(true)
-    const { lat, lng } = currentLocation
-    const categories = ['restaurant', 'gas_station', 'tourist_attraction']
-    const nearbyPlaces: NearbySearch[] = []
-    const uniquePlaceIds = new Set<string>()
-
-    for (const category of categories) {
-      const response = await fetch(
-        `/api/nearbyPlaces?lat=${lat}&lng=${lng}&category=${category}`,
-      )
-      const data = await response.json()
-      const bestPlaces = data
-        .filter((place: NearbySearch) => {
-          return place?.rating && place.business_status === 'OPERATIONAL'
-        })
-        .sort((a: NearbySearch, b: NearbySearch) => b.rating - a.rating)
-        .slice(0, 2)
-
-      bestPlaces.forEach((place: NearbySearch) => {
-        if (!uniquePlaceIds.has(place.place_id)) {
-          nearbyPlaces.push(place)
-          uniquePlaceIds.add(place.place_id)
-        }
-      })
-    }
-    setLoadingSuggestions(false)
-    return nearbyPlaces.map((place) => ({
-      ...place,
-      name: getSuggestionName(place),
-    }))
-  }
-
-  function groupPoints(route: Point[]) {
-    const numSegments = 3 // onde 1 = lugar de inicio e 3 = destino, entao pegarei os intermediarios
-    const groupedPoints: Point[] = []
-    const groupSize = Math.ceil(route.length / numSegments)
-
-    for (let i = 1; i <= numSegments - 1; i++) {
-      const startIndex = i * groupSize
-      const endIndex = Math.min((i + 1) * groupSize, route.length)
-      const group = route.slice(startIndex, endIndex)
-      groupedPoints.push(group[0])
-    }
-
-    return groupedPoints
-  }
-
-  function getSuggestionName(suggestion: NearbySearch) {
-    const { name, plus_code: plusCode } = suggestion
-    const spaceIndex = plusCode.compound_code.indexOf(' ')
-    if (spaceIndex >= 0) {
-      const str = plusCode.compound_code.substring(spaceIndex + 1)
-      return `${name} - ${str}`
-    }
-    return name
-  }
-
   useEffect(() => {
     if (files) {
       const newFiles: ImageFile[] = []
@@ -420,37 +325,6 @@ export const CreateRouteDialog = ({
                   <Plus color="#50b2c0" />
                 </button>
               </AddContainer>
-            )}
-
-            {loadingSuggestions && !suggestions.length && <Loading />}
-
-            {!loadingSuggestions && suggestions.length > 0 && (
-              <>
-                <h2>Sugestões de paradas</h2>
-                {suggestions.map((suggestion) => (
-                  <div
-                    key={suggestion?.place_id}
-                    className="suggestion-container"
-                    style={{ marginBottom: 12 }}
-                  >
-                    <Input
-                      disabled
-                      css={{}}
-                      value={suggestion.name}
-                      icon={<Lightbulb color="#8381d9" />}
-                    />
-
-                    <AddContainer style={{ margin: 0 }}>
-                      <button
-                        disabled={false}
-                        onClick={suggestPlacesAlongRoute}
-                      >
-                        <Plus color="#50b2c0" />
-                      </button>
-                    </AddContainer>
-                  </div>
-                ))}
-              </>
             )}
 
             <h2>Sua avaliação</h2>
