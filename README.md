@@ -51,10 +51,9 @@ acesse https://motoways.vercel.app/ pelo seu navegador.
 
 ### Escrita
 
-- [ ] Escrever sobre as features implementadas
-- [ ] Escrever sobre as features não implementadas
-- [ ] Criar o formulário de pesquisa
-- [ ] Coletar dados
+- [x] Escrever sobre as features implementadas
+- [x] Escrever sobre as features não implementadas
+- [ ] Testar com usuários
 - [ ] Finalizar o projeto
 
 <!-- Badges -->
