@@ -1,40 +1,6 @@
 import { DialogClose, DialogContent } from '@/styles/components/ImagesDialog'
 import { CaretLeft, CaretRight, X } from 'phosphor-react'
-import { CSSProperties } from 'react'
-
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-
-interface ArrowProps {
-  className?: string
-  style?: CSSProperties
-  onClick?: () => void
-}
-
-function NextArrow({ className, style, onClick }: ArrowProps) {
-  return (
-    <CaretRight
-      className={className}
-      size={42}
-      color={'#F8F9FC'}
-      onClick={onClick}
-      style={{ ...style }}
-    />
-  )
-}
-
-function PreviousArrow({ className, style, onClick }: ArrowProps) {
-  return (
-    <CaretLeft
-      className={className}
-      size={42}
-      color={'#F8F9FC'}
-      onClick={onClick}
-      style={{ ...style }}
-    />
-  )
-}
+import { useState } from 'react'
 
 interface ImagesDialogProps {
   setIsOpen: (isOpen: boolean) => void
@@ -42,15 +8,16 @@ interface ImagesDialogProps {
 }
 
 export const ImagesDialog = ({ setIsOpen, images }: ImagesDialogProps) => {
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    dots: false,
-    className: 'carrousel-container-images',
-    nextArrow: <NextArrow />,
-    prevArrow: <PreviousArrow />,
+  const [currentImage, setCurrentImage] = useState(0)
+
+  function previousImage() {
+    if (currentImage === 0) setCurrentImage(images.length - 1)
+    else setCurrentImage(currentImage - 1)
+  }
+
+  function nextImage() {
+    if (currentImage === images.length - 1) setCurrentImage(0)
+    else setCurrentImage(currentImage + 1)
   }
 
   return (
@@ -60,13 +27,21 @@ export const ImagesDialog = ({ setIsOpen, images }: ImagesDialogProps) => {
       </DialogClose>
 
       <div className="dialog-content">
-        <Slider {...settings}>
-          {images.map((image) => (
-            <div key={image} className="images-slide-image-container">
-              <img src={image} alt="" />
-            </div>
-          ))}
-        </Slider>
+        <div className="image-container">
+          <CaretLeft
+            onClick={previousImage}
+            className="icon-left arrow-icon"
+            size={42}
+            color={'#F8F9FC'}
+          />
+          <img src={images[currentImage]} alt="" />
+          <CaretRight
+            onClick={nextImage}
+            className="icon-right arrow-icon"
+            size={42}
+            color={'#F8F9FC'}
+          />
+        </div>
       </div>
     </DialogContent>
   )

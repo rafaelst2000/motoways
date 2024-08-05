@@ -11,57 +11,46 @@ export const DialogContent = styled(Dialog.Content, {
   zIndex: 999,
   padding: '24px 42px',
 
-  '@media screen and (max-width: 1130px)': {
-    width: '100%',
-    padding: '12px 24px',
-  },
-
   '.dialog-content': {
     width: '100%',
     height: 'calc(100vh - 48px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
 
-    '@media screen and (max-width: 1130px)': {
-      height: 'calc(100vh - 24px)',
-    },
-  },
+    '.image-container': {
+      width: '100%',
+      height: '100%',
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
 
-  '.carrousel-container-images': {
-    width: '100% !important',
-  },
+      img: {
+        maxWidth: '100%',
+        maxHeight: '100%',
+        objectFit: 'contain',
+      },
 
-  '.slick-prev, .slick-next': {
-    width: 42,
-    height: 42,
-  },
+      '.arrow-icon': {
+        position: 'absolute',
+        cursor: 'pointer',
+      },
 
-  '.images-slide-container': {
-    width: '100%',
-    display: 'flex !important',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+      '.icon-right': {
+        right: '0',
+      },
 
-    '@media screen and (max-width: 1130px)': {
-      height: 'calc(100vh - 24px)',
-    },
-  },
-  '.images-slide-image-container': {
-    width: '100% !important',
-    height: '100% !important',
-    padding: '0 24px',
-
-    img: {
-      display: 'block',
-      maxWidth: '100%',
-      'object-fit': 'fill',
+      '.icon-left': {
+        left: '0',
+      },
     },
   },
 })
 
 export const DialogClose = styled('button', {
-  color: '$gray-400',
+  color: 'white',
   background: 'none',
   border: 'none',
   marginLeft: 'auto',
@@ -70,4 +59,7 @@ export const DialogClose = styled('button', {
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
+  zIndex: 2000,
+  position: 'absolute',
+  right: '24px',
 })
