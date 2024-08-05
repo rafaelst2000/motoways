@@ -11,6 +11,7 @@ import {
   startAt,
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from '@firebase/storage'
+import imageCompression from 'browser-image-compression'
 import { getUserById } from './users'
 
 export const getUserLastRoute = async (userId = '') => {
@@ -185,10 +186,18 @@ export const createNewRoute = async (route, routeStops, files) => {
 const handleUpload = async (files) => {
   if (files.length > 0) {
     const urls = []
+
+    const compressionOptions = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    }
+
     await Promise.all(
       Array.from(files).map(async (file) => {
-        const storageRef = ref(storage, `images/${file.name}`)
-        await uploadBytes(storageRef, file)
+        const compressedFile = await imageCompression(file, compressionOptions)
+        const storageRef = ref(storage, `images/${compressedFile.name}`)
+        await uploadBytes(storageRef, compressedFile)
         const imageUrl = await getDownloadURL(storageRef)
         urls.push(imageUrl)
       }),
