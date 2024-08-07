@@ -14,6 +14,10 @@ export const SideMenuContainer = styled('aside', {
   position: 'sticky',
   top: 20,
 
+  '.logo': {
+    cursor: 'pointer',
+  },
+
   ul: {
     marginTop: '4rem',
     display: 'flex',
@@ -71,6 +75,12 @@ export const SideMenuContainer = styled('aside', {
     p: {
       fontSize: '0.875rem',
       color: '$gray-200',
+      cursor: 'pointer',
+      transition: '0.2s',
+
+      '&:hover': {
+        textDecoration: 'underline',
+      },
     },
 
     svg: {

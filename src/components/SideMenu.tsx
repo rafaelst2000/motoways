@@ -27,6 +27,7 @@ export default function SideMenu() {
         priority={true}
         alt="Motoways logo"
         className="logo"
+        onClick={() => goToPage('feed')}
       />
 
       <ul>
@@ -75,8 +76,12 @@ export default function SideMenu() {
       </ul>
 
       <div className="user-container">
-        <Avatar url={user?.image || ''} variant={'xs'} />
-        <p>{user?.name || ''}</p>
+        <Avatar
+          url={user?.image || ''}
+          variant={'xs'}
+          onClick={() => goToPage('profile')}
+        />
+        <p onClick={() => goToPage('profile')}>{user?.name || ''}</p>
         <SignOut
           size={20}
           color="#F75A68"
