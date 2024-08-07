@@ -1,5 +1,5 @@
 import { BottomContainer } from '@/styles/components/BottomMenu'
-import { ChartLineUp, User, Binoculars, SignOut, Heart } from 'phosphor-react'
+import { House, User, Binoculars, SignOut, Heart } from 'phosphor-react'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
@@ -17,7 +17,7 @@ export default function BottomMenu() {
           className={router.pathname === '/feed' ? 'selected' : ''}
           onClick={() => goToPage('feed')}
         >
-          <ChartLineUp
+          <House
             size={28}
             color={router.pathname === '/feed' ? '#F8F9FC' : '#8d95af'}
           />

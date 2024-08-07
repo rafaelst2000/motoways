@@ -1,5 +1,5 @@
 import { SideMenuContainer } from '@/styles/components/SideMenu'
-import { ChartLineUp, User, Binoculars, SignOut, Heart } from 'phosphor-react'
+import { House, User, Binoculars, SignOut, Heart } from 'phosphor-react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
@@ -34,7 +34,7 @@ export default function SideMenu() {
           className={router.pathname === '/feed' ? 'selected' : ''}
           onClick={() => goToPage('feed')}
         >
-          <ChartLineUp
+          <House
             size={24}
             color={router.pathname === '/feed' ? '#F8F9FC' : '#8d95af'}
           />

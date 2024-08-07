@@ -3,7 +3,7 @@ import PostCard from '@/components/PostCard'
 import PostCardMy from '@/components/PostCardMy'
 import SideMenu from '@/components/SideMenu'
 import { FeedContainer } from '@/styles/Feed'
-import { ChartLineUp, PlusCircle } from 'phosphor-react'
+import { House, PlusCircle } from 'phosphor-react'
 import { getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
@@ -57,7 +57,7 @@ export default function Feed({
         <div className="center-content">
           <div className="page-title-container">
             <div className="page-title">
-              <ChartLineUp size={32} color={'#50B2C0'} />
+              <House size={32} color={'#50B2C0'} />
               <h1>Início</h1>
             </div>
             <CreateRouteDialog onCreateRoute={onCreateRoute}>
