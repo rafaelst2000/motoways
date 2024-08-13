@@ -113,7 +113,7 @@ export const CreateRouteDialog = ({
       distance,
       images: [],
       publish_at: new Date().toISOString(),
-      rate: 5 || currentRate,
+      rate: currentRate,
       uf,
       user_id: user?.id,
       duration,
@@ -153,6 +153,7 @@ export const CreateRouteDialog = ({
 
   const disableButton =
     loading ||
+    !currentRate ||
     !description ||
     !locations[0].place_id ||
     !previewUrls.length ||
